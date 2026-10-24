@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="Dominio/Dominio.csproj" />
-  <Project Path="Negocio/Negocio.csproj" />
-  <Project Path="TPC_Comercio_Libreria/TPC_Comercio_Libreria.csproj" />
+  <Project Path="Dominio/Dominio.csproj" Id="ebb368f3-4654-4fd4-ae60-9907761c0e1c" />
+  <Project Path="Negocio/Negocio.csproj" Id="0f4dda58-3664-47b4-9d3b-402077c4ec82" />
+  <Project Path="TPC_Comercio_Libreria/TPC_Comercio_Libreria.csproj" Id="f8d39624-e297-4bd6-8dea-460d997f32cb" />
 </Solution>

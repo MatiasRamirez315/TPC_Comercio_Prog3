@@ -11,7 +11,7 @@ namespace TPC_Comercio_Libreria
 {
 
 
-    public partial class Default
+    public partial class MiMaster
     {
 
         /// <summary>
