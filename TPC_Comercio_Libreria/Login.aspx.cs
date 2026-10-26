@@ -16,10 +16,17 @@ namespace TPC_Comercio_Libreria
         }
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            // Por ahora solo mostramos un error de prueba.
-            // Después acá va la validación real contra la base de datos.
-            lblError.Visible = true;
-            lblError.Text = "Usuario o contraseña incorrectos.";
+            lblError.Visible = false;
+
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                lblError.Visible = true;
+                lblError.Text = "Completá usuario y contraseña.";
+                return;
+            }
+
+            Response.Redirect("Inicio.aspx");
         }
     }
 }
