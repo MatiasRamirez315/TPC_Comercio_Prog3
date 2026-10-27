@@ -1,0 +1,71 @@
+﻿/* Panel de inicio / menú */
+.menu-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .menu-header h1 {
+        color: #2d3748;
+        font-size: 26px;
+        margin-bottom: 6px;
+    }
+
+    .menu-header p {
+        color: #718096;
+        font-size: 15px;
+    }
+
+.menu-seccion {
+    color: #4a5568;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 28px 0 14px 4px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 16px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+    .menu-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgba(78, 115, 223, 0.15);
+        border-color: #4e73df;
+    }
+
+.menu-icon {
+    font-size: 34px;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.menu-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.menu-desc {
+    font-size: 13px;
+    color: #718096;
+    line-height: 1.35;
+}
