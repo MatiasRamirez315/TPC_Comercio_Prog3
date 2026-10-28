@@ -1,9 +1,5 @@
 <Solution>
-
-  <Folder Name="/Base de Datos/">
-    <File Path="libreria_escolar.sql" />
-  </Folder>
-
+  <Project Path="AccesoDatos/AccesoDatos.csproj" Id="2db8cc3e-0059-4233-908b-ef86d0ab25be" />
   <Project Path="Dominio/Dominio.csproj" Id="ebb368f3-4654-4fd4-ae60-9907761c0e1c" />
   <Project Path="Negocio/Negocio.csproj" Id="0f4dda58-3664-47b4-9d3b-402077c4ec82" />
   <Project Path="TPC_Comercio_Libreria/TPC_Comercio_Libreria.csproj" Id="f8d39624-e297-4bd6-8dea-460d997f32cb" />
