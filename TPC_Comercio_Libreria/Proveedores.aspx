@@ -25,8 +25,8 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>CUIT</th>
                     <th>Descripcion</th>
+                    <th>CUIT</th>
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th class="text-center">Estado</th>
