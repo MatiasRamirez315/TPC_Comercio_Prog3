@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 
 namespace TPC_Comercio_Libreria
 {
@@ -6,6 +7,14 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                ClienteNegocio negocio = new ClienteNegocio();
+                RepClientes.DataSource = negocio.listar();
+                RepClientes.DataBind();
+            }
+            
+
         }
     }
 }

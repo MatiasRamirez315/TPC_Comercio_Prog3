@@ -32,6 +32,10 @@ namespace AccesoDatos
                     lista.Add(aux);
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 datos.cerrarConexion();
