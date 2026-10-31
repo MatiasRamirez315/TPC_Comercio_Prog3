@@ -14,13 +14,13 @@
 
     <div class="page-card">
 
-        <div class="page-toolbar">
+        <div class="page-toolbar" >
             <input type="text" class="form-control search-input-input"
                 placeholder="Buscar por Nombre, Codigo, Marca..." />
         </div>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" >
         <table class="table table-hover align-middle mb-0">
             <thead>
                 <tr>

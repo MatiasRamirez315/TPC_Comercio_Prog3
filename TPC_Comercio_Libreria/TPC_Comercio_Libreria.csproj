@@ -69,7 +69,7 @@
   <ItemGroup>
     <Content Include="Clientes.aspx" />
     <Content Include="Content\Styles.css" />
-    <Content Include="EditarCliente.aspx" />
+    <Content Include="AgregarCliente.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
@@ -85,12 +85,12 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EditarCliente.aspx.cs">
-      <DependentUpon>EditarCliente.aspx</DependentUpon>
+    <Compile Include="AgregarCliente.aspx.cs">
+      <DependentUpon>AgregarCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EditarCliente.aspx.designer.cs">
-      <DependentUpon>EditarCliente.aspx</DependentUpon>
+    <Compile Include="AgregarCliente.aspx.designer.cs">
+      <DependentUpon>AgregarCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
