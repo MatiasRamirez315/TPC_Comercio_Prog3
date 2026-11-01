@@ -27,88 +27,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Cuadernos</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Escritura</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mochilas y bolsos</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Papelería</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Artística</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Geometría</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Libros</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Agendas</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Adhesivos y cintas</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Carpetas y archivadores</td>
-                        <td class="text-center"><span class="badge bg-secondary">Inactiva</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
+                    <asp:Repeater ID="repCategorias" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("Descripcion") %></td>
+                                <td class="text-center">
+                                    <%# Convert.ToBoolean(Eval("Activo"))
+                                        ? "<span class='badge bg-success'>Activa</span>"
+                                        : "<span class='badge bg-secondary'>Inactiva</span>" %>
+                                </td>
+                                <td class="text-center">
+                                    <a href="EditarCategoria.aspx" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </tbody>
             </table>
+        </div>
+
+        <div class="text-center text-muted mt-3" id="msgVacio" runat="server" visible="false">
+            No hay categorías cargadas todavía.
         </div>
 
     </div>
