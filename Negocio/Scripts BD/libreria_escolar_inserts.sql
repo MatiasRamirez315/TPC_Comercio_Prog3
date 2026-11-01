@@ -247,7 +247,49 @@ exec SP_AltaCliente
   @email = 'info@eesn6.edu.ar',
   @direccion = 'constitucion 1810, San Fernando'  
 
-  select * from clientes 
+create procedure SP_ModificarCliente
+(
+  @id_cliente int,
+  @nombre varchar (100),
+  @cuit varchar (20),
+  @telefono varchar (20),
+  @email varchar (100),
+  @direccion varchar (200),
+  @activo bit
+)
+as begin
+update clientes
+set nombre = @nombre,
+    cuit = @cuit,
+    telefono = @telefono,
+    email = @email,
+    direccion = @direccion,
+    activo = @activo
+    where id_cliente = @id_cliente
+end
+
+exec SP_ModificarCliente
+  @id_cliente = 1,
+  @nombre = 'Escuela Primaria Numero 12 - Modificada',
+  @cuit = '30-71234567-1',
+  @telefono = '011-4555-1001',
+  @email = 'info@eesn12.edu.ar',
+  @direccion = 'Av. Siempre Viva 123',
+  @activo = 0
+
+  create procedure SP_EliminarCliente
+  (
+    @id_cliente int
+  )
+  as begin
+    delete from clientes where id_cliente = @id_cliente
+  end
+
+  exec SP_EliminarCliente
+    @id_cliente = 11
+
+select * from clientes 
+
 
   create procedure SP_AltaProveedor
   (
@@ -263,6 +305,48 @@ exec SP_AltaCliente
   values (@nombre,@descripcion,@cuit,@telefono,@email,1)
   END
 
+create procedure SP_ModificarProveedor
+(
+  @id_proveedor int,
+  @nombre varchar (150),
+  @descripcion varchar (300),
+  @cuit varchar (20),
+  @telefono varchar (50),
+  @email varchar (150),
+  @activo bit
+)
+as begin
+update proveedores
+  
+set nombre = @nombre,
+    descripcion = @descripcion,
+    cuit = @cuit,
+    telefono = @telefono,
+    email = @email,
+    activo = @activo
+    where id_proveedor = @id_proveedor
+  end
+
+exec SP_ModificarProveedor
+  @id_proveedor = 11,
+  @nombre = 'EQ arte - Modificado',
+  @descripcion = 'acrilicos y pintura - Modificado',
+  @cuit = '30-41955805-0',
+  @telefono = '1162717547',
+  @email = 'info@eqarte.com.ar',
+  @activo = 0
+
+create procedure SP_EliminarProveedor
+(
+  @id_proveedor int
+)
+as begin
+  delete from proveedores where id_proveedor = @id_proveedor
+  end
+
+exec SP_EliminarProveedor
+ @id_proveedor = 11
+
   select * from proveedores
 
   exec SP_AltaProveedor 
@@ -272,3 +356,78 @@ exec SP_AltaCliente
     @telefono = '1162717547',
     @email = 'info@eqarte.gov.ar',
     @activo = 1
+
+  create procedure SP_AltaProducto
+  (
+    @codigo VARCHAR(20),
+    @nombre VARCHAR(150),
+    @id_marca INT,
+    @id_categoria INT,
+    @id_tipo INT,
+    @porcentaje_ganancia DECIMAL(5,2),
+    @precio_compra_ultimo DECIMAL(10,2),
+    @stock_actual INT,
+    @stock_minimo INT,
+    @activo BIT
+  )
+  as Begin
+  insert into productos (codigo,nombre,id_marca,id_categoria,id_tipo,porcentaje_ganancia,precio_compra_ultimo,stock_actual,stock_minimo,activo)
+  values(@codigo,@nombre,@id_marca,@id_categoria,@id_tipo,@porcentaje_ganancia,@precio_compra_ultimo,@stock_actual,@stock_minimo,1)
+  End
+
+  select * from productos
+
+  exec SP_AltaProducto
+    @codigo = 'LIB-021',
+    @nombre = 'Acrilico EQ Arte 500ml',
+    @id_marca = 1,
+    @id_categoria = 5,
+    @id_tipo = 4,
+    @porcentaje_ganancia = 30.00,
+    @precio_compra_ultimo = 1200.00,
+    @stock_actual = 20,
+    @stock_minimo = 5,
+    @activo = 1
+
+create procedure SP_ModificarProducto(
+  @id_producto int,
+  @codigo varchar (20),
+  @nombre varchar (150),
+  @id_marca int,
+  @id_categoria int,
+  @id_tipo int,
+  @porcentaje_ganancia decimal(5,2),
+  @precio_compra_ultimo decimal(10,2),
+  @stock_actual int,
+  @stock_minimo int,
+  @activo bit
+)
+as begin
+ update productos
+ set codigo = @codigo,
+     nombre = @nombre,
+     id_marca = @id_marca,
+     id_categoria = @id_categoria,
+     id_tipo = @id_tipo,
+     porcentaje_ganancia = @porcentaje_ganancia,
+     precio_compra_ultimo = @precio_compra_ultimo,
+     stock_actual = @stock_actual,
+     stock_minimo = @stock_minimo,
+     activo = @activo
+     where id_producto = @id_producto
+   end
+
+exec SP_ModificarProducto
+  @id_producto = 21,
+  @codigo = 'LIB-021',
+  @nombre = 'Acrilico EQ Arte 500ml - Modificado',
+  @id_marca = 1,
+  @id_categoria = 5,
+  @id_tipo = 4,
+  @porcentaje_ganancia = 30.00,
+  @precio_compra_ultimo = 1200.00,
+  @stock_actual = 20,
+  @stock_minimo = 5,
+  @activo = 0
+
+select * from productos
