@@ -13,10 +13,7 @@ namespace AccesoDatos
 
             try
             {
-                datos.setearConsulta(
-                    "SELECT id_cliente, nombre, cuit, telefono, email, direccion, activo " +
-                    "FROM clientes ORDER BY nombre"
-                );
+                datos.setearProcedimiento("SP_ListarClientes");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -31,10 +28,6 @@ namespace AccesoDatos
                     aux.Activo = (bool)datos.Lector["activo"];
                     lista.Add(aux);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
