@@ -28,53 +28,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>admin</td>
-                        <td><span class="badge bg-primary">Administrador</span></td>
-                        <td class="text-center"><span class="badge bg-success">Activo</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>juan.perez</td>
-                        <td><span class="badge bg-info text-dark">Vendedor</span></td>
-                        <td class="text-center"><span class="badge bg-success">Activo</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>maria.gomez</td>
-                        <td><span class="badge bg-info text-dark">Vendedor</span></td>
-                        <td class="text-center"><span class="badge bg-success">Activo</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>carlos.lopez</td>
-                        <td><span class="badge bg-info text-dark">Vendedor</span></td>
-                        <td class="text-center"><span class="badge bg-secondary">Inactivo</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ana.martinez</td>
-                        <td><span class="badge bg-info text-dark">Vendedor</span></td>
-                        <td class="text-center"><span class="badge bg-success">Activo</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
+                    <asp:Repeater ID="repUsuarios" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("NombreUsuario") %></td>
+                                <td>
+                                    <%# Eval("Rol").ToString() == "ADMIN"
+                                        ? "<span class='badge bg-primary'>Administrador</span>"
+                                        : "<span class='badge bg-info text-dark'>Vendedor</span>" %>
+                                </td>
+                                <td class="text-center">
+                                    <%# Convert.ToBoolean(Eval("Activo"))
+                                        ? "<span class='badge bg-success'>Activo</span>"
+                                        : "<span class='badge bg-secondary'>Inactivo</span>" %>
+                                </td>
+                                <td class="text-center">
+                                    <a href="EditarUsuario.aspx" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </tbody>
             </table>
+        </div>
+
+        <div class="text-center text-muted mt-3" id="msgVacio" runat="server" visible="false">
+            No hay usuarios cargados todavía.
         </div>
 
     </div>
