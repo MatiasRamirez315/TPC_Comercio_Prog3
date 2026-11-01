@@ -11,5 +11,10 @@ namespace Negocio
             ClienteDatos datos = new ClienteDatos();
             return datos.listar();
         }
+        public void agregar(Cliente nuevo)
+        {
+            ClienteDatos datos = new ClienteDatos();
+            datos.agregar(nuevo);
+        }
     }
 }

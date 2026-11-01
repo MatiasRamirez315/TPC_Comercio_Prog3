@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Categorias.aspx" />
+    <Content Include="ClienteForm.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Content\Styles.css" />
     <Content Include="AgregarCliente.aspx" />
@@ -86,6 +87,13 @@
     </Compile>
     <Compile Include="Categorias.aspx.designer.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClienteForm.aspx.cs">
+      <DependentUpon>ClienteForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClienteForm.aspx.designer.cs">
+      <DependentUpon>ClienteForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>

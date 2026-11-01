@@ -10,6 +10,10 @@
         <a href="ClienteForm.aspx" class="btn btn-primary">+ Nuevo cliente</a>
     </div>
 
+    <asp:Label ID="lblMensaje" runat="server"
+           CssClass="alert alert-success d-block mb-3"
+           Visible="false" />
+
     <div class="page-card">
 
         <div class="page-toolbar">

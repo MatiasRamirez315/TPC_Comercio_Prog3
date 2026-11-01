@@ -12,6 +12,13 @@ namespace TPC_Comercio_Libreria
             if (!IsPostBack)
             {
                 cargarClientes();
+
+                if (Session["MensajeExito"] != null)
+                {
+                    lblMensaje.Text = Session["MensajeExito"].ToString();
+                    lblMensaje.Visible = true;
+                    Session["MensajeExito"] = null;
+                }
             }
         }
 
