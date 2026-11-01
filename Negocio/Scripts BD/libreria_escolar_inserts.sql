@@ -213,3 +213,62 @@ GO
 
 select *from clientes;
 select *from proveedores;
+
+select * from productos;
+
+ SELECT id_proveedor, nombre, descripcion, cuit, telefono, email, activo
+   FROM Proveedores WHERE activo = 1 order by nombre 
+
+select p.id_producto, p.codigo, p.nombre, m.id_marca,m.descripcion,c.id_categoria, c.descripcion, t.id_tipo, t.descripcion , p.precio_compra_ultimo, p.stock_actual, p.activo
+  from productos p
+  left join marcas m on p.id_marca = m.id_marca
+  left join categorias c on p.id_categoria = c.id_categoria
+  left join tipos t on p.id_tipo = t.id_tipo
+  where p.activo = 1 order by p.nombre
+
+create procedure SP_AltaCliente
+(
+  @nombre varchar (100),
+  @cuit varchar (20),
+  @telefono varchar (20),
+  @email varchar (100),
+  @direccion varchar (200)
+)
+as
+begin 
+  insert into clientes (nombre, cuit, telefono, email, direccion, activo)
+  values (@nombre, @cuit, @telefono, @email, @direccion, 1)
+end
+
+exec SP_AltaCliente
+  @nombre = 'Escuela de educacion segundaria numero 6',
+  @cuit = '30-71234567-2',
+  @telefono = '011-4555-1011',
+  @email = 'info@eesn6.edu.ar',
+  @direccion = 'constitucion 1810, San Fernando'  
+
+  select * from clientes 
+
+  create procedure SP_AltaProveedor
+  (
+    @nombre VARCHAR(150),
+    @descripcion VARCHAR(300),
+    @cuit VARCHAR(20),
+    @telefono VARCHAR(50),
+    @email VARCHAR(150),
+    @activo bit
+  )
+  as BEGIN
+  insert into proveedores (nombre,descripcion,cuit,telefono,email,activo)
+  values (@nombre,@descripcion,@cuit,@telefono,@email,1)
+  END
+
+  select * from proveedores
+
+  exec SP_AltaProveedor 
+    @nombre = 'EQ Arte',
+    @descripcion = 'acrilicos y pintura',
+    @cuit = '30-41955805-0',
+    @telefono = '1162717547',
+    @email = 'info@eqarte.gov.ar',
+    @activo = 1
