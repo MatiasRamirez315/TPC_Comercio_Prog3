@@ -79,6 +79,13 @@ namespace AccesoDatos
             comando.Parameters.AddWithValue(nombre, valor);
         }
 
+        public void setearProcedimiento(string procedimiento)
+        {
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.CommandText = procedimiento;
+            comando.Parameters.Clear();
+        }
+
         public void cerrarConexion()
         {
             if (lector != null)
