@@ -37,15 +37,15 @@ end
 
 GO 
 
-create procedure SP_EliminarCliente
-  (
-    @id_cliente int
-  )
-  as begin
-    delete from clientes where id_cliente = @id_cliente
-  end
-
-  GO
+CREATE PROCEDURE SP_EliminarCliente
+(
+    @id_cliente INT
+)
+AS
+BEGIN
+    UPDATE clientes SET activo = 0 WHERE id_cliente = @id_cliente
+END
+GO
 
   create procedure SP_AltaProveedor
   (
@@ -87,13 +87,14 @@ set nombre = @nombre,
 
 GO
 
-create procedure SP_EliminarProveedor
+CREATE PROCEDURE SP_EliminarProveedor
 (
-  @id_proveedor int
+    @id_proveedor INT
 )
-as begin
-  delete from proveedores where id_proveedor = @id_proveedor
-  end
+AS
+BEGIN
+    UPDATE proveedores SET activo = 0 WHERE id_proveedor = @id_proveedor
+END
 
 GO
 
@@ -144,3 +145,123 @@ as begin
      activo = @activo
      where id_producto = @id_producto
    end
+GO
+
+CREATE PROCEDURE SP_ListarClientes
+AS
+BEGIN
+    SELECT id_cliente, nombre, cuit, telefono, email, direccion, activo
+    FROM clientes
+    ORDER BY nombre
+END
+GO
+
+CREATE PROCEDURE SP_ListarProveedores
+AS
+BEGIN
+    SELECT id_proveedor, nombre, descripcion, cuit, telefono, email, activo
+    FROM proveedores
+    ORDER BY nombre
+END
+GO
+
+CREATE PROCEDURE SP_ListarMarcas
+AS
+BEGIN
+    SELECT id_marca, descripcion, activo
+    FROM marcas
+    ORDER BY descripcion
+END
+GO
+
+CREATE PROCEDURE SP_ListarCategorias
+AS
+BEGIN
+    SELECT id_categoria, descripcion, activo
+    FROM categorias
+    ORDER BY descripcion
+END
+GO
+
+CREATE PROCEDURE SP_ListarTipos
+AS
+BEGIN
+    SELECT id_tipo, descripcion, activo
+    FROM tipos
+    ORDER BY descripcion
+END
+GO
+
+CREATE PROCEDURE SP_ListarUsuarios
+AS
+BEGIN
+    SELECT id_usuario, usuario, rol, activo
+    FROM usuarios
+    ORDER BY usuario
+END
+GO
+
+CREATE PROCEDURE SP_ListarProductos
+AS
+BEGIN
+    SELECT
+        p.id_producto,
+        p.codigo,
+        p.nombre,
+        p.id_marca,
+        m.descripcion  AS marca,
+        p.id_categoria,
+        c.descripcion  AS categoria,
+        p.id_tipo,
+        t.descripcion  AS tipo,
+        p.porcentaje_ganancia,
+        p.precio_compra_ultimo,
+        p.stock_actual,
+        p.stock_minimo,
+        p.activo
+    FROM productos p
+    INNER JOIN marcas     m ON m.id_marca     = p.id_marca
+    INNER JOIN categorias c ON c.id_categoria = p.id_categoria
+    INNER JOIN tipos      t ON t.id_tipo      = p.id_tipo
+    ORDER BY p.nombre
+END
+GO
+
+CREATE PROCEDURE SP_ListarVentas
+AS
+BEGIN
+    SELECT
+        v.id_venta,
+        v.fecha,
+        v.id_cliente,
+        cl.nombre       AS cliente,
+        v.id_usuario,
+        u.usuario       AS vendedor,
+        v.estado,
+        v.total,
+        v.metodo_pago
+    FROM ventas v
+    INNER JOIN clientes cl ON cl.id_cliente = v.id_cliente
+    INNER JOIN usuarios u  ON u.id_usuario  = v.id_usuario
+    ORDER BY v.fecha DESC
+END
+GO
+
+CREATE PROCEDURE SP_ListarCompras
+AS
+BEGIN
+    SELECT
+        c.id_compra,
+        c.fecha,
+        c.id_proveedor,
+        p.nombre        AS proveedor,
+        c.id_usuario,
+        u.usuario       AS usuario,
+        c.numero_factura,
+        c.total
+    FROM compras c
+    INNER JOIN proveedores p ON p.id_proveedor = c.id_proveedor
+    INNER JOIN usuarios u    ON u.id_usuario   = c.id_usuario
+    ORDER BY c.fecha DESC
+END
+GO

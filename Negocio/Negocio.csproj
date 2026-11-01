@@ -49,6 +49,7 @@
   <ItemGroup>
     <Content Include="Scripts BD\libreria_escolar.sql" />
     <Content Include="Scripts BD\libreria_escolar_inserts.sql" />
+    <Content Include="Scripts BD\libreria_escolar_storeProcedures.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccesoDatos\AccesoDatos.csproj">
