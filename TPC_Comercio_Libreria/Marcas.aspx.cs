@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Dominio;
+using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
@@ -11,7 +9,21 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                cargarMarcas();
+            }
+        }
 
+        private void cargarMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            List<Marca> lista = negocio.listar();
+
+            repMarcas.DataSource = lista;
+            repMarcas.DataBind();
+
+            msgVacio.Visible = lista.Count == 0;
         }
     }
 }

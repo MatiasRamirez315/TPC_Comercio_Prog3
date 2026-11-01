@@ -33,7 +33,7 @@ namespace AccesoDatos
                     aux.Nombre = datos.Lector["nombre"].ToString();
                     aux.Marca = new Marca();
                     aux.Marca.IDMarca = (int)datos.Lector["id_marca"];
-                    aux.Marca.Nombre = datos.Lector["desc_marca"].ToString();
+                    aux.Marca.Descripcion = datos.Lector["desc_marca"].ToString();
                     aux.Categoria = new Categoria();
                     aux.Categoria.IDCategoria = (int)datos.Lector["id_categoria"];
                     aux.Categoria.Descripcion = datos.Lector["desc_categoria"].ToString();

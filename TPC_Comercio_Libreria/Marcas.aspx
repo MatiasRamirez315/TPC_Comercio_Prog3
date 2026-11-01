@@ -27,88 +27,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Rivadavia</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Faber-Castell</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Bic</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Maped</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Pelikan</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Alba</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Simball</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Filgo</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mooving</td>
-                        <td class="text-center"><span class="badge bg-success">Activa</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Stabilo</td>
-                        <td class="text-center"><span class="badge bg-secondary">Inactiva</span></td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                        </td>
-                    </tr>
+                    <asp:Repeater ID="repMarcas" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("Descripcion") %></td>
+                                <td class="text-center">
+                                    <%# Convert.ToBoolean(Eval("Activo"))
+                                        ? "<span class='badge bg-success'>Activa</span>"
+                                        : "<span class='badge bg-secondary'>Inactiva</span>" %>
+                                </td>
+                                <td class="text-center">
+                                    <a href="EditarMarca.aspx" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </tbody>
             </table>
+        </div>
+
+        <div class="text-center text-muted mt-3" id="msgVacio" runat="server" visible="false">
+            No hay marcas cargadas todavía.
         </div>
 
     </div>

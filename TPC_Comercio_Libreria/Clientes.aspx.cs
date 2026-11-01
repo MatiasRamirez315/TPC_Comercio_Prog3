@@ -1,5 +1,7 @@
-﻿using Negocio;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using Dominio;
+using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
@@ -9,12 +11,19 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
-                ClienteNegocio negocio = new ClienteNegocio();
-                RepClientes.DataSource = negocio.listar();
-                RepClientes.DataBind();
+                cargarClientes();
             }
-            
+        }
 
+        private void cargarClientes()
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            List<Cliente> lista = negocio.listar();
+
+            repClientes.DataSource = lista;
+            repClientes.DataBind();
+
+            msgVacio.Visible = lista.Count == 0;
         }
     }
 }

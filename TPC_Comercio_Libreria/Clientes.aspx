@@ -30,27 +30,32 @@
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <asp:Repeater ID="RepClientes" runat="server">
+                    <asp:Repeater ID="repClientes" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td><%# Eval ("Nombre")%></td>
-                                <td><%# Eval ("Cuit")%></td>
-                                <td><%# Eval ("Telefono")%></td>
-                                <td><%# Eval ("Email")%></td>
-                                <td><%# Eval ("Direccion")%></td>
-                                <td class="text-center"><span class="badge bg-success">Activo</span></td>
+                                <td><%# Eval("Nombre") %></td>
+                                <td><%# Eval("Cuit") %></td>
+                                <td><%# Eval("Telefono") %></td>
+                                <td><%# Eval("Email") %></td>
+                                <td><%# Eval("Direccion") %></td>
+                                <td class="text-center">
+                                    <%# Convert.ToBoolean(Eval("Activo"))
+                                        ? "<span class='badge bg-success'>Activo</span>"
+                                        : "<span class='badge bg-secondary'>Inactivo</span>" %>
+                                </td>
                                 <td class="text-center">
                                     <a href="EditarCliente.aspx" class="btn btn-sm btn-outline-secondary">Editar</a>
                                 </td>
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
-
-
                 </tbody>
             </table>
+        </div>
+
+        <div class="text-center text-muted mt-3" id="msgVacio" runat="server" visible="false">
+            No hay clientes cargados todavía.
         </div>
 
     </div>
