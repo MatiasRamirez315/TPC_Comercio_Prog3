@@ -29,5 +29,10 @@ namespace Negocio
             ClienteDatos datos = new ClienteDatos();
             datos.modificar(cliente);
         }
+        public void eliminar(int id)
+        {
+            ClienteDatos datos = new ClienteDatos();
+            datos.eliminar(id);
+        }
     }
 }

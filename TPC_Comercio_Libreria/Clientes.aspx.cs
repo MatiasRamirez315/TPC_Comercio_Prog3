@@ -11,6 +11,17 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["eliminar"]))
+                {
+                    int id = int.Parse(Request.QueryString["eliminar"]);
+                    ClienteNegocio negocio = new ClienteNegocio();
+                    negocio.eliminar(id);
+
+                    Session["MensajeExito"] = "Cliente dado de baja correctamente.";
+                    Response.Redirect("Clientes.aspx");
+                    return;
+                }
+
                 cargarClientes();
 
                 if (Session["MensajeExito"] != null)

@@ -115,5 +115,20 @@ namespace AccesoDatos
                 datos.cerrarConexion();
             }
         }
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_EliminarCliente");
+                datos.setearParametro("@id_cliente", id);
+                datos.EjecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

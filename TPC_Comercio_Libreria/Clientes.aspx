@@ -51,7 +51,9 @@
                                 <td class="text-center">
                                     <a href='<%# "ClienteForm.aspx?id=" + Eval("IDCliente") %>'
                                        class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>    
+                                    <a href='<%# "Clientes.aspx?eliminar=" + Eval("IDCliente") %>'
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('¿Dar de baja este cliente? Dejará de aparecer como activo.');">Eliminar</a>
                                 </td>
                             </tr>
                         </ItemTemplate>
