@@ -265,3 +265,15 @@ BEGIN
     ORDER BY c.fecha DESC
 END
 GO
+
+CREATE PROCEDURE SP_ObtenerCliente
+(
+    @id_cliente INT
+)
+AS
+BEGIN
+    SELECT id_cliente, nombre, cuit, telefono, email, direccion, activo
+    FROM clientes
+    WHERE id_cliente = @id_cliente
+END
+GO

@@ -11,6 +11,18 @@ namespace TPC_Comercio_Libreria
             if (!IsPostBack)
             {
                 lblError.Visible = false;
+
+                if (HayIdEnQueryString())
+                {
+                    lblTitulo.Text = "Editar cliente";
+                    lblSubtitulo.Text = "Modificá los datos del cliente";
+                    cargarCliente();
+                }
+                else
+                {
+                    lblTitulo.Text = "Nuevo cliente";
+                    lblSubtitulo.Text = "Completá los datos para dar de alta un cliente";
+                }
             }
         }
 
@@ -33,18 +45,42 @@ namespace TPC_Comercio_Libreria
 
             try
             {
-                Cliente nuevo = new Cliente();
-                nuevo.Nombre = txtNombre.Text.Trim();
-                nuevo.Cuit = txtCuit.Text.Trim();
-                nuevo.Telefono = txtTelefono.Text.Trim();
-                nuevo.Email = email;
-                nuevo.Direccion = txtDireccion.Text.Trim();
-                nuevo.Activo = true;
-
                 ClienteNegocio negocio = new ClienteNegocio();
-                negocio.agregar(nuevo);
 
-                Session["MensajeExito"] = "Cliente agregado correctamente.";
+                if (HayIdEnQueryString())
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+                    Cliente cliente = negocio.listarPorId(id);
+
+                    if (cliente == null)
+                    {
+                        Response.Redirect("Clientes.aspx");
+                        return;
+                    }
+
+                    cliente.Nombre = txtNombre.Text.Trim();
+                    cliente.Cuit = txtCuit.Text.Trim();
+                    cliente.Telefono = txtTelefono.Text.Trim();
+                    cliente.Email = email;
+                    cliente.Direccion = txtDireccion.Text.Trim();
+
+                    negocio.modificar(cliente);
+                    Session["MensajeExito"] = "Cliente modificado correctamente.";
+                }
+                else
+                {
+                    Cliente nuevo = new Cliente();
+                    nuevo.Nombre = txtNombre.Text.Trim();
+                    nuevo.Cuit = txtCuit.Text.Trim();
+                    nuevo.Telefono = txtTelefono.Text.Trim();
+                    nuevo.Email = email;
+                    nuevo.Direccion = txtDireccion.Text.Trim();
+                    nuevo.Activo = true;
+
+                    negocio.agregar(nuevo);
+                    Session["MensajeExito"] = "Cliente agregado correctamente.";
+                }
+
                 Response.Redirect("Clientes.aspx");
             }
             catch (Exception ex)
@@ -56,6 +92,30 @@ namespace TPC_Comercio_Libreria
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("Clientes.aspx");
+        }
+
+        private bool HayIdEnQueryString()
+        {
+            return !string.IsNullOrWhiteSpace(Request.QueryString["id"]);
+        }
+
+        private void cargarCliente()
+        {
+            int id = int.Parse(Request.QueryString["id"]);
+            ClienteNegocio negocio = new ClienteNegocio();
+            Cliente cliente = negocio.listarPorId(id);
+
+            if (cliente == null)
+            {
+                Response.Redirect("Clientes.aspx");
+                return;
+            }
+
+            txtNombre.Text = cliente.Nombre;
+            txtCuit.Text = cliente.Cuit;
+            txtTelefono.Text = cliente.Telefono;
+            txtEmail.Text = cliente.Email;
+            txtDireccion.Text = cliente.Direccion;
         }
 
         private void mostrarError(string mensaje)

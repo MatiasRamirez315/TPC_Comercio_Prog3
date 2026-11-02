@@ -4,8 +4,8 @@
 
     <div class="page-header">
         <div>
-            <h1>Nuevo cliente</h1>
-            <p>Completá los datos para dar de alta un cliente</p>
+            <h1><asp:Label ID="lblTitulo" runat="server" Text="Nuevo cliente" /></h1>
+            <p><asp:Label ID="lblSubtitulo" runat="server" Text="Completá los datos para dar de alta un cliente" /></p>
         </div>
         <a href="Clientes.aspx" class="btn btn-outline-secondary">← Volver al listado</a>
     </div>

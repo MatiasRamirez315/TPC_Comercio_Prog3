@@ -49,7 +49,9 @@
                                         : "<span class='badge bg-secondary'>Inactivo</span>" %>
                                 </td>
                                 <td class="text-center">
-                                    <a href="EditarCliente.aspx" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                    <a href='<%# "ClienteForm.aspx?id=" + Eval("IDCliente") %>'
+                                       class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>    
                                 </td>
                             </tr>
                         </ItemTemplate>
