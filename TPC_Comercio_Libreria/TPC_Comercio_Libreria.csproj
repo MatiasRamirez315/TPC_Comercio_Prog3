@@ -73,6 +73,7 @@
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="MarcaForm.aspx" />
     <Content Include="Marcas.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Proveedores.aspx" />
@@ -125,6 +126,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MarcaForm.aspx.cs">
+      <DependentUpon>MarcaForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MarcaForm.aspx.designer.cs">
+      <DependentUpon>MarcaForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Marcas.aspx.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>
