@@ -78,6 +78,7 @@
     <Content Include="Marcas.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Proveedores.aspx" />
+    <Content Include="ProveedorForm.aspx" />
     <Content Include="TipoForm.aspx" />
     <Content Include="Tipos.aspx" />
     <Content Include="Usuarios.aspx" />
@@ -171,6 +172,13 @@
     </Compile>
     <Compile Include="Proveedores.aspx.designer.cs">
       <DependentUpon>Proveedores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProveedorForm.aspx.cs">
+      <DependentUpon>ProveedorForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProveedorForm.aspx.designer.cs">
+      <DependentUpon>ProveedorForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="TipoForm.aspx.cs">
       <DependentUpon>TipoForm.aspx</DependentUpon>

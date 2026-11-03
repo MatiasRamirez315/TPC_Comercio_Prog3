@@ -498,3 +498,15 @@ BEGIN
     WHERE id_usuario = @id_usuario
 END
 GO
+
+CREATE PROCEDURE SP_ObtenerProveedor
+(
+    @id_proveedor INT
+)
+AS
+BEGIN
+    SELECT id_proveedor, nombre, descripcion, cuit, telefono, email, activo
+    FROM proveedores
+    WHERE id_proveedor = @id_proveedor
+END
+GO

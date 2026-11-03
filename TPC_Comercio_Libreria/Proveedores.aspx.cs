@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Dominio;
 using Negocio;
 
 namespace TPC_Comercio_Libreria
@@ -14,11 +11,37 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
-                ProveedorNegocio negocio = new ProveedorNegocio();
-                RepProveedores.DataSource = negocio.listar();
-                RepProveedores.DataBind();
-            }
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["eliminar"]))
+                {
+                    int id = int.Parse(Request.QueryString["eliminar"]);
+                    ProveedorNegocio negocio = new ProveedorNegocio();
+                    negocio.eliminar(id);
 
+                    Session["MensajeExito"] = "Proveedor dado de baja correctamente.";
+                    Response.Redirect("Proveedores.aspx");
+                    return;
+                }
+
+                cargarProveedores();
+
+                if (Session["MensajeExito"] != null)
+                {
+                    lblMensaje.Text = Session["MensajeExito"].ToString();
+                    lblMensaje.Visible = true;
+                    Session["MensajeExito"] = null;
+                }
+            }
+        }
+
+        private void cargarProveedores()
+        {
+            ProveedorNegocio negocio = new ProveedorNegocio();
+            List<Proveedor> lista = negocio.listar();
+
+            repProveedores.DataSource = lista;
+            repProveedores.DataBind();
+
+            msgVacio.Visible = lista.Count == 0;
         }
     }
 }
