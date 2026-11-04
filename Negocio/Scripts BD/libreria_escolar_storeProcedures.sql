@@ -324,3 +324,221 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_AltaMarca
+(
+    @descripcion VARCHAR(100)
+)
+AS
+BEGIN
+    INSERT INTO marcas (descripcion, activo)
+    VALUES (@descripcion, 1)
+END
+GO
+
+CREATE PROCEDURE SP_ModificarMarca
+(
+    @id_marca    INT,
+    @descripcion VARCHAR(100),
+    @activo      BIT
+)
+AS
+BEGIN
+    UPDATE marcas
+    SET descripcion = @descripcion,
+        activo = @activo
+    WHERE id_marca = @id_marca
+END
+GO
+
+CREATE PROCEDURE SP_EliminarMarca
+(
+    @id_marca INT
+)
+AS
+BEGIN
+    UPDATE marcas SET activo = 0 WHERE id_marca = @id_marca
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerMarca
+(
+    @id_marca INT
+)
+AS
+BEGIN
+    SELECT id_marca, descripcion, activo
+    FROM marcas
+    WHERE id_marca = @id_marca
+END
+GO
+
+
+CREATE PROCEDURE SP_AltaCategoria
+(
+    @descripcion VARCHAR(100)
+)
+AS
+BEGIN
+    INSERT INTO categorias (descripcion, activo)
+    VALUES (@descripcion, 1)
+END
+GO
+
+CREATE PROCEDURE SP_ModificarCategoria
+(
+    @id_categoria INT,
+    @descripcion  VARCHAR(100),
+    @activo       BIT
+)
+AS
+BEGIN
+    UPDATE categorias
+    SET descripcion = @descripcion,
+        activo = @activo
+    WHERE id_categoria = @id_categoria
+END
+GO
+
+CREATE PROCEDURE SP_EliminarCategoria
+(
+    @id_categoria INT
+)
+AS
+BEGIN
+    UPDATE categorias SET activo = 0 WHERE id_categoria = @id_categoria
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerCategoria
+(
+    @id_categoria INT
+)
+AS
+BEGIN
+    SELECT id_categoria, descripcion, activo
+    FROM categorias
+    WHERE id_categoria = @id_categoria
+END
+GO
+
+
+CREATE PROCEDURE SP_AltaTipo
+(
+    @descripcion VARCHAR(100)
+)
+AS
+BEGIN
+    INSERT INTO tipos (descripcion, activo)
+    VALUES (@descripcion, 1)
+END
+GO
+
+CREATE PROCEDURE SP_ModificarTipo
+(
+    @id_tipo     INT,
+    @descripcion VARCHAR(100),
+    @activo      BIT
+)
+AS
+BEGIN
+    UPDATE tipos
+    SET descripcion = @descripcion,
+        activo = @activo
+    WHERE id_tipo = @id_tipo
+END
+GO
+
+CREATE PROCEDURE SP_EliminarTipo
+(
+    @id_tipo INT
+)
+AS
+BEGIN
+    UPDATE tipos SET activo = 0 WHERE id_tipo = @id_tipo
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerTipo
+(
+    @id_tipo INT
+)
+AS
+BEGIN
+    SELECT id_tipo, descripcion, activo
+    FROM tipos
+    WHERE id_tipo = @id_tipo
+END
+GO
+
+CREATE PROCEDURE SP_AltaUsuario
+(
+    @usuario  VARCHAR(50),
+    @password VARCHAR(255),
+    @rol      VARCHAR(20)
+)
+AS
+BEGIN
+    INSERT INTO usuarios (usuario, password, rol, activo)
+    VALUES (@usuario, @password, @rol, 1)
+END
+GO
+
+CREATE PROCEDURE SP_ModificarUsuario
+(
+    @id_usuario INT,
+    @usuario    VARCHAR(50),
+    @password   VARCHAR(255),
+    @rol        VARCHAR(20),
+    @activo     BIT
+)
+AS
+BEGIN
+    -- Si @password llega NULL o vac o, se mantiene la contrase a anterior.
+    -- Si llega un hash nuevo, se actualiza.
+    UPDATE usuarios
+    SET usuario  = @usuario,
+        password = CASE
+                       WHEN @password IS NULL OR @password = ''
+                       THEN password
+                       ELSE @password
+                   END,
+        rol      = @rol,
+        activo   = @activo
+    WHERE id_usuario = @id_usuario
+END
+GO
+
+CREATE PROCEDURE SP_EliminarUsuario
+(
+    @id_usuario INT
+)
+AS
+BEGIN
+    UPDATE usuarios SET activo = 0 WHERE id_usuario = @id_usuario
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerUsuario
+(
+    @id_usuario INT
+)
+AS
+BEGIN
+    -- No devuelve password (ni el hash) por seguridad.
+    SELECT id_usuario, usuario, rol, activo
+    FROM usuarios
+    WHERE id_usuario = @id_usuario
+END
+GO
+
+CREATE PROCEDURE SP_ObtenerProveedor
+(
+    @id_proveedor INT
+)
+AS
+BEGIN
+    SELECT id_proveedor, nombre, descripcion, cuit, telefono, email, activo
+    FROM proveedores
+    WHERE id_proveedor = @id_proveedor
+END
+GO

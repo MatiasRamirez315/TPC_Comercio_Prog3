@@ -10,6 +10,10 @@
         <a href="MarcaForm.aspx" class="btn btn-primary">+ Nueva marca</a>
     </div>
 
+    <asp:Label ID="lblMensaje" runat="server"
+               CssClass="alert alert-success d-block mb-3"
+               Visible="false" />
+
     <div class="page-card">
 
         <div class="page-toolbar">
@@ -37,8 +41,11 @@
                                         : "<span class='badge bg-secondary'>Inactiva</span>" %>
                                 </td>
                                 <td class="text-center">
-                                    <a href="EditarMarca.aspx" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                    <a href='<%# "MarcaForm.aspx?id=" + Eval("IDMarca") %>'
+                                       class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href='<%# "Marcas.aspx?eliminar=" + Eval("IDMarca") %>'
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('¿Dar de baja esta marca?');">Eliminar</a>
                                 </td>
                             </tr>
                         </ItemTemplate>
