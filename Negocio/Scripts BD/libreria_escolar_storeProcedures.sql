@@ -62,6 +62,20 @@ GO
 END
 
 GO
+create procedure SP_AltaProveedor
+(
+    @nombre varchar(150),
+    @descripcion varchar (300),
+    @cuit varchar (20),
+    @telefono varchar (50),
+    @email varchar (150)
+)
+as begin
+  insert into proveedores (nombre, descripcion, cuit, telefono, email, activo)
+  values (@nombre, @descripcion, @cuit, @telefono, @email, 1)
+end
+
+GO
 
 create procedure SP_ModificarProveedor
 (
@@ -98,7 +112,7 @@ END
 
 GO
 
-create procedure SP_AltaProducto
+create procedure SP_AltaProducto 
   (
     @codigo VARCHAR(20),
     @nombre VARCHAR(150),
@@ -146,6 +160,38 @@ as begin
      where id_producto = @id_producto
    end
 GO
+
+create procedure SP_EliminarProducto
+(
+    @id_producto INT
+)
+as begin
+
+    update productos set activo = 0 where id_producto = @id_producto
+end
+Go
+
+Create procedure SP_AltaImagen
+(
+    @id_producto int,
+    @url varchar(500)
+)
+as begin
+
+    insert into imagenes (id_producto, url)
+    values (@id_producto, @url)
+end
+go
+
+create procedure SP_EliminarImagen
+(
+    @id_imagen int
+)
+as begin
+
+    delete from imagenes where id_imagen = @id_imagen
+end
+go
 
 CREATE PROCEDURE SP_ListarClientes
 AS
@@ -277,3 +323,4 @@ BEGIN
     WHERE id_cliente = @id_cliente
 END
 GO
+

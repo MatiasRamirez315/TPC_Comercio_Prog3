@@ -9,7 +9,7 @@
             <h1>Productos</h1>
             <p>Listado de los productos de la librería</p>
         </div>
-        <a href="ProductosForm.aspx" class="btn btn-primary">+ Nuevo Producto</a>
+        <a href="AgregarProducto.aspx" class="btn btn-primary">+ Nuevo Producto</a>
     </div>
 
     <div class="page-card">

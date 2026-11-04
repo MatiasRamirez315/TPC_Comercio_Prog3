@@ -20,5 +20,7 @@ namespace Dominio
         public int StockMinimo { get; set; }
         public bool Activo { get; set; }
 
+        public List<Imagen> Imagenes { get; set; }
+
     }
 }

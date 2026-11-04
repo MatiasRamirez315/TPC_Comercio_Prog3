@@ -32,12 +32,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .login-card h1 {
-            font-size: 24px;
-            color: #2d3748;
-            text-align: center;
-            margin-bottom: 4px;
-        }
+            .login-card h1 {
+                font-size: 24px;
+                color: #2d3748;
+                text-align: center;
+                margin-bottom: 4px;
+            }
 
         .subtitle {
             text-align: center;
@@ -50,13 +50,13 @@
             margin-bottom: 18px;
         }
 
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            color: #4a5568;
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
+            .form-group label {
+                display: block;
+                font-size: 14px;
+                color: #4a5568;
+                margin-bottom: 6px;
+                font-weight: 500;
+            }
 
         .input {
             width: 100%;
@@ -69,10 +69,10 @@
             font-family: inherit;
         }
 
-        .input:focus {
-            border-color: #4e73df;
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.15);
-        }
+            .input:focus {
+                border-color: #4e73df;
+                box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.15);
+            }
 
         .btn {
             width: 100%;
@@ -89,9 +89,9 @@
             font-family: inherit;
         }
 
-        .btn:hover {
-            background: #3b5bcc;
-        }
+            .btn:hover {
+                background: #3b5bcc;
+            }
 
         .error {
             display: block;
@@ -122,6 +122,17 @@
             </div>
 
             <asp:Button ID="btnLogin" runat="server" Text="Iniciar sesión" CssClass="btn" OnClick="btnLogin_Click" />
+            
+            
+            <div>
+                <p> No tenes cuenta?</p>
+                <a href="#">Registrate acá</a>
+            </div>
+
+            <div>
+                <a href="#">¿Ha olvidado su contraseña?</a>
+            </div>
+
 
             <asp:Label ID="lblError" runat="server" CssClass="error" Visible="false" />
         </div>
