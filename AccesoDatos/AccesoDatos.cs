@@ -49,7 +49,7 @@ namespace AccesoDatos
 
         public void EjecutarAccion()
         {
-            comando.Connection = conexion;
+            comando.Connection = conexion; 
             try
             {
                 if (conexion.State != ConnectionState.Open)

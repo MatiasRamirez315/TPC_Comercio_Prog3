@@ -15,6 +15,8 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
+
+
                 try
                 {
                     MarcaNegocio marcaNegocio = new MarcaNegocio();
@@ -40,11 +42,52 @@ namespace TPC_Comercio_Libreria
 
                     throw ex;
                 }
+
+            
+
+            string id = Request.QueryString["id"];
+
+                if (id != null)
+                {
+
+                    hdnID.Value = id;
+                    int idProductoModificado = int.Parse(id);
+
+                    ProductoNegocio productoNegocio = new ProductoNegocio();
+
+                    Producto prod = productoNegocio.ObtenerPorID(idProductoModificado);
+
+                    if (prod != null)
+                    {
+
+                        txtNombre.Text = prod.Nombre;
+                        txtCodigo.Text = prod.Codigo;
+                        txtStockActual.Text = prod.StockActual.ToString();
+                        txtStockMin.Text = prod.StockMinimo.ToString(); //sin esto no me precargaba los decimal
+                        txtPorcentajeGanancia.Text = prod.PorcentajeGanancia.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                        txtPrecioCompraUltimo.Text = prod.PrecioCompraUltimo.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+
+                        ddlCategoria.SelectedValue = prod.Categoria.IDCategoria.ToString();
+                        ddlMarca.SelectedValue = prod.Marca.IDMarca.ToString();
+                        ddlTipo.SelectedValue = prod.Tipo.IDTipo.ToString();
+
+                        if (prod.Imagenes != null && prod.Imagenes.Count > 0)
+                        {
+                            txtURLImagen.Text = prod.Imagenes[0].URLImagen;
+                            imgVistaPrevia.ImageUrl = prod.Imagenes[0].URLImagen;
+                        }
+
+
+                        btnAceptar.Text = "Modificar";
+
+                    }
+                }
             }
+
 
         }
 
-        protected void txtURLImagen_TextChanged(object sender,EventArgs e)
+        protected void txtURLImagen_TextChanged(object sender, EventArgs e)
         {
             imgVistaPrevia.ImageUrl = txtURLImagen.Text;
 
@@ -54,7 +97,7 @@ namespace TPC_Comercio_Libreria
             try
             {
                 Producto nuevoProducto = new Producto();
-                if(!string.IsNullOrEmpty(txtNombre.Text))
+                if (!string.IsNullOrEmpty(txtNombre.Text))
                 {
                     nuevoProducto.Nombre = txtNombre.Text;
                 }
@@ -76,17 +119,17 @@ namespace TPC_Comercio_Libreria
 
                 nuevoProducto.Marca = new Marca();
                 nuevoProducto.Marca.IDMarca = int.Parse(ddlMarca.SelectedValue);
-                
+
                 nuevoProducto.Categoria = new Categoria();
                 nuevoProducto.Categoria.IDCategoria = int.Parse(ddlCategoria.SelectedValue);
-                
+
 
                 nuevoProducto.Tipo = new Tipo();
                 nuevoProducto.Tipo.IDTipo = int.Parse(ddlTipo.SelectedValue);
 
                 if (!string.IsNullOrEmpty(txtPorcentajeGanancia.Text) && decimal.Parse(txtPorcentajeGanancia.Text) > 0)
                 {
-                    nuevoProducto.PorcentajeGanancia = decimal.Parse(txtPorcentajeGanancia.Text);
+                    nuevoProducto.PorcentajeGanancia = decimal.Parse(txtPorcentajeGanancia.Text, System.Globalization.CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -95,7 +138,7 @@ namespace TPC_Comercio_Libreria
                 }
                 if (!string.IsNullOrEmpty(txtPrecioCompraUltimo.Text) && decimal.Parse(txtPrecioCompraUltimo.Text) > 0)
                 {
-                    nuevoProducto.PrecioCompraUltimo = decimal.Parse(txtPrecioCompraUltimo.Text);
+                    nuevoProducto.PrecioCompraUltimo = decimal.Parse(txtPrecioCompraUltimo.Text, System.Globalization.CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -123,25 +166,46 @@ namespace TPC_Comercio_Libreria
 
                 ProductoNegocio negocio = new ProductoNegocio();
 
-                int idNuevoProducto = negocio.Agregar(nuevoProducto);
-
-                if (idNuevoProducto > 0 && !string.IsNullOrEmpty(txtURLImagen.Text))
+                if (hdnID.Value != "")
                 {
-                    Imagen nuevaImg = new Imagen();
+                    nuevoProducto.IDProducto = int.Parse(hdnID.Value);
 
-                    nuevaImg.IDProducto = idNuevoProducto;
-                    nuevaImg.URLImagen = txtURLImagen.Text;
+                    negocio.Modificar(nuevoProducto);
 
-                    ImagenNegocio negocioImagen = new ImagenNegocio();
-                    negocioImagen.Agregar(nuevaImg);
+                    if (!string.IsNullOrEmpty(txtURLImagen.Text)) 
+                    {
+                        Imagen nuevaImg = new Imagen();
+
+                        nuevaImg.IDProducto = nuevoProducto.IDProducto;
+                        nuevaImg.URLImagen = txtURLImagen.Text;
+
+                        ImagenNegocio negocioImagen = new ImagenNegocio();
+                        negocioImagen.ModificarImagen(nuevaImg); //revisar aca
+                    }
+                    else
+                    {
+                        int idNuevoProducto = negocio.Agregar(nuevoProducto);
+
+                        if (idNuevoProducto > 0 && !string.IsNullOrEmpty(txtURLImagen.Text))
+                        {
+                            Imagen nuevaImg = new Imagen();
+
+                            nuevaImg.IDProducto = idNuevoProducto;
+                            nuevaImg.URLImagen = txtURLImagen.Text;
+
+                            ImagenNegocio negocioImagen = new ImagenNegocio();
+                            negocioImagen.Agregar(nuevaImg);
+                        }
+                    }
+
+
+                    Response.Redirect("Productos.aspx");
                 }
-
-                Response.Redirect("Productos.aspx");
             }
             catch (Exception ex)
             {
                 throw ex;
-                
+
             }
         }
     }

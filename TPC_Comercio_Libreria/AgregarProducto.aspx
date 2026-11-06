@@ -6,6 +6,7 @@
     <h1>Agregar producto</h1>
     <br />
     <div class="row">
+        <asp:HiddenField ID="hdnID" runat="server" />  <%-- hidden field lo uso para poder cambiar el boton de guardar a modificar  --%>
 
         <div class="col-md-6">
             <div class="mb-3">
