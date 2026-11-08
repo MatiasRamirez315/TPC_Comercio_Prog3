@@ -61,16 +61,16 @@
 
     <h2 class="menu-seccion">Administración</h2>
     <div class="menu-grid">
-        <a href="Usuarios.aspx" class="menu-card" id="cardUsuarios">
+        <a href="Usuarios.aspx" class="menu-card" id="cardUsuarios" runat="server">
             <span class="menu-icon">👤</span>
             <span class="menu-title">Usuarios</span>
             <span class="menu-desc">Alta y baja de usuarios del sistema</span>
         </a>
-        <a href="Reportes.aspx" class="menu-card" id="cardReportes">
-            <span class="menu-icon">📊</span>
-            <span class="menu-title">Reportes</span>
-            <span class="menu-desc">Ventas, ganancias y stock bajo</span>
-        </a>
-    </div>
+    <a href="Reportes.aspx" class="menu-card" id="cardReportes" runat="server">
+        <span class="menu-icon">📊</span>
+        <span class="menu-title">Reportes</span>
+        <span class="menu-desc">Ventas, ganancias y stock bajo</span>
+    </a>
+</div>
 
 </asp:Content>

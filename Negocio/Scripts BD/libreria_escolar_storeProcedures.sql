@@ -527,3 +527,14 @@ BEGIN
     WHERE id_proveedor = @id_proveedor
 END
 GO
+CREATE PROCEDURE SP_Login
+(
+    @usuario VARCHAR(50)
+)
+AS
+BEGIN
+    SELECT id_usuario, usuario, password, rol, activo
+    FROM usuarios
+    WHERE usuario = @usuario
+END
+GO

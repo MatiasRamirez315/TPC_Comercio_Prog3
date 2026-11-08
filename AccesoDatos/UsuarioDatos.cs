@@ -122,5 +122,33 @@ namespace AccesoDatos
                 datos.cerrarConexion();
             }
         }
+        public Usuario buscarPorNombre(string nombreUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_Login");
+                datos.setearParametro("@usuario", nombreUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.IDUsuario = (int)datos.Lector["id_usuario"];
+                    aux.NombreUsuario = datos.Lector["usuario"].ToString();
+                    aux.Contrasena = datos.Lector["password"].ToString(); 
+                    aux.Rol = datos.Lector["rol"].ToString();
+                    aux.Activo = (bool)datos.Lector["activo"];
+                    return aux;
+                }
+
+                return null;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

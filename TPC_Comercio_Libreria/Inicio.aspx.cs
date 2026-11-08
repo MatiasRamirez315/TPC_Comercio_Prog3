@@ -11,7 +11,11 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "ADMIN")
+            {
+                cardUsuarios.Visible = false;
+                cardReportes.Visible = false;
+            }
         }
     }
 }

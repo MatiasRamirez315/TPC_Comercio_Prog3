@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TPC_Comercio_Libreria
 {
@@ -11,8 +6,17 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Si estamos en la página de login, no chequeamos sesión
+            // (aunque Login.aspx no usa master, esto es por si en el futuro lo hace)
+            string pagina = System.IO.Path.GetFileName(Request.Url.AbsolutePath).ToLower();
 
+            if (pagina != "login.aspx" && Session["IDUsuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
         }
+
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             Session.Clear();

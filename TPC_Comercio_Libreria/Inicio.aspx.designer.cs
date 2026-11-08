@@ -13,5 +13,23 @@ namespace TPC_Comercio_Libreria
 
     public partial class Inicio
     {
+
+        /// <summary>
+        /// cardUsuarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardUsuarios;
+
+        /// <summary>
+        /// cardReportes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardReportes;
     }
 }
