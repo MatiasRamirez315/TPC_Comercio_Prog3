@@ -11,7 +11,25 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["eliminar"]))
+                {
+                    int id = int.Parse(Request.QueryString["eliminar"]);
+                    UsuarioNegocio negocio = new UsuarioNegocio();
+                    negocio.eliminar(id);
+
+                    Session["MensajeExito"] = "Usuario dado de baja correctamente.";
+                    Response.Redirect("Usuarios.aspx");
+                    return;
+                }
+
                 cargarUsuarios();
+
+                if (Session["MensajeExito"] != null)
+                {
+                    lblMensaje.Text = Session["MensajeExito"].ToString();
+                    lblMensaje.Visible = true;
+                    Session["MensajeExito"] = null;
+                }
             }
         }
 

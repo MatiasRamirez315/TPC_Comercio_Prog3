@@ -60,21 +60,6 @@ GO
   insert into proveedores (nombre,descripcion,cuit,telefono,email,activo)
   values (@nombre,@descripcion,@cuit,@telefono,@email,1)
 END
-
-GO
-create procedure SP_AltaProveedor
-(
-    @nombre varchar(150),
-    @descripcion varchar (300),
-    @cuit varchar (20),
-    @telefono varchar (50),
-    @email varchar (150)
-)
-as begin
-  insert into proveedores (nombre, descripcion, cuit, telefono, email, activo)
-  values (@nombre, @descripcion, @cuit, @telefono, @email, 1)
-end
-
 GO
 
 create procedure SP_ModificarProveedor
