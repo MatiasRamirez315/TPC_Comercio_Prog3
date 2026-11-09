@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using AccesoDatos;
 using Dominio;
-using AccesoDatos;
+using System;
+using System.Collections.Generic;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Negocio
 {
@@ -10,6 +12,55 @@ namespace Negocio
         {
             UsuarioDatos datos = new UsuarioDatos();
             return datos.listar();
+        }
+
+        public Usuario listarPorId(int id)
+        {
+            UsuarioDatos datos = new UsuarioDatos();
+            return datos.listarPorId(id);
+        }
+
+        public void agregar(Usuario nuevo, string passwordPlano)
+        {
+            nuevo.Contrasena = BC.HashPassword(passwordPlano);
+            UsuarioDatos datos = new UsuarioDatos();
+            datos.agregar(nuevo);
+        }
+
+        public void modificar(Usuario usuario, string passwordPlano)
+        {
+            // Si passwordPlano está vacío, Contrasena queda null
+            // y el SP mantiene el hash anterior (CASE interno del SP).
+            if (!string.IsNullOrWhiteSpace(passwordPlano))
+                usuario.Contrasena = BC.HashPassword(passwordPlano);
+
+            UsuarioDatos datos = new UsuarioDatos();
+            datos.modificar(usuario);
+        }
+
+        public void eliminar(int id)
+        {
+            UsuarioDatos datos = new UsuarioDatos();
+            datos.eliminar(id);
+        }
+
+        public Usuario validarLogin(string nombreUsuario, string passwordPlano)
+        {
+            UsuarioDatos datos = new UsuarioDatos();
+            Usuario usuario = datos.buscarPorNombre(nombreUsuario);
+
+            if (usuario == null)
+                throw new Exception("Usuario o contraseña incorrectos.");
+
+            if (!usuario.Activo)
+                throw new Exception("Tu cuenta está deshabilitada. Contactá al administrador.");
+
+            if (!BC.Verify(passwordPlano, usuario.Contrasena))
+                throw new Exception("Usuario o contraseña incorrectos.");
+
+            // Login OK: limpiamos el hash del objeto antes de devolverlo
+            usuario.Contrasena = null;
+            return usuario;
         }
     }
 }

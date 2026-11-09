@@ -65,11 +65,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="AgregarProducto.aspx" />
-
     <Content Include="CategoriaForm.aspx" />
-
     <Content Include="Categorias.aspx" />
     <Content Include="ClienteForm.aspx" />
     <Content Include="Clientes.aspx" />
@@ -85,6 +82,7 @@
     <Content Include="ProveedorForm.aspx" />
     <Content Include="TipoForm.aspx" />
     <Content Include="Tipos.aspx" />
+    <Content Include="UsuarioForm.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -93,16 +91,15 @@
       <DependentUpon>AgregarProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-	  <Compile Include="AgregarProducto.aspx.designer.cs">
-		  <DependentUpon>AgregarProducto.aspx</DependentUpon>
-	  </Compile>
+    <Compile Include="AgregarProducto.aspx.designer.cs">
+      <DependentUpon>AgregarProducto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CategoriaForm.aspx.cs">
       <DependentUpon>CategoriaForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CategoriaForm.aspx.designer.cs">
       <DependentUpon>CategoriaForm.aspx</DependentUpon>
-
     </Compile>
     <Compile Include="Categorias.aspx.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
@@ -205,6 +202,13 @@
     </Compile>
     <Compile Include="Tipos.aspx.designer.cs">
       <DependentUpon>Tipos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioForm.aspx.cs">
+      <DependentUpon>UsuarioForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuarioForm.aspx.designer.cs">
+      <DependentUpon>UsuarioForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>

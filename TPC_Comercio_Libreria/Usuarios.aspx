@@ -10,6 +10,10 @@
         <a href="UsuarioForm.aspx" class="btn btn-primary">+ Nuevo usuario</a>
     </div>
 
+    <asp:Label ID="lblMensaje" runat="server"
+               CssClass="alert alert-success d-block mb-3"
+               Visible="false" />
+
     <div class="page-card">
 
         <div class="page-toolbar">
@@ -43,8 +47,11 @@
                                         : "<span class='badge bg-secondary'>Inactivo</span>" %>
                                 </td>
                                 <td class="text-center">
-                                    <a href="EditarUsuario.aspx" class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                    <a href='<%# "UsuarioForm.aspx?id=" + Eval("IDUsuario") %>'
+                                       class="btn btn-sm btn-outline-secondary me-1">Editar</a>
+                                    <a href='<%# "Usuarios.aspx?eliminar=" + Eval("IDUsuario") %>'
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('¿Dar de baja este usuario?');">Eliminar</a>
                                 </td>
                             </tr>
                         </ItemTemplate>

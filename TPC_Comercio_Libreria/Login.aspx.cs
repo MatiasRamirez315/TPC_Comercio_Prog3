@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Dominio;
+using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
@@ -12,8 +8,8 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
+
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             lblError.Visible = false;
@@ -21,12 +17,34 @@ namespace TPC_Comercio_Libreria
             if (string.IsNullOrWhiteSpace(txtUsuario.Text) ||
                 string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                lblError.Visible = true;
-                lblError.Text = "Completá usuario y contraseña.";
+                mostrarError("Completá usuario y contraseña.");
                 return;
             }
 
-            Response.Redirect("Inicio.aspx");
+            try
+            {
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                Usuario usuario = negocio.validarLogin(
+                    txtUsuario.Text.Trim(),
+                    txtPassword.Text
+                );
+
+                Session["IDUsuario"] = usuario.IDUsuario;
+                Session["NombreUsuario"] = usuario.NombreUsuario;
+                Session["Rol"] = usuario.Rol;
+
+                Response.Redirect("Inicio.aspx");
+            }
+            catch (Exception ex)
+            {
+                mostrarError(ex.Message);
+            }
+        }
+
+        private void mostrarError(string mensaje)
+        {
+            lblError.Text = mensaje;
+            lblError.Visible = true;
         }
     }
 }
