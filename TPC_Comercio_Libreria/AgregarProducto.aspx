@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Agregar producto</h1>
+    <h1 id="h1Titulo" runat="server">Agregar producto </h1>
     <br />
     <div class="row">
         <asp:HiddenField ID="hdnID" runat="server" />  <%-- hidden field lo uso para poder cambiar el boton de guardar a modificar  --%>

@@ -46,10 +46,10 @@ namespace TPC_Comercio_Libreria
             
 
             string id = Request.QueryString["id"];
-
                 if (id != null)
                 {
-
+                h1Titulo.InnerText = "Modificar Producto";
+                    
                     hdnID.Value = id;
                     int idProductoModificado = int.Parse(id);
 
@@ -172,7 +172,7 @@ namespace TPC_Comercio_Libreria
 
                     negocio.Modificar(nuevoProducto);
 
-                    if (!string.IsNullOrEmpty(txtURLImagen.Text)) 
+                    if (!string.IsNullOrEmpty(txtURLImagen.Text))
                     {
                         Imagen nuevaImg = new Imagen();
 
@@ -182,25 +182,26 @@ namespace TPC_Comercio_Libreria
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.ModificarImagen(nuevaImg); //revisar aca
                     }
-                    else
+                }
+                else
+                {
+                    int idNuevoProducto = negocio.Agregar(nuevoProducto);
+
+                    if (idNuevoProducto > 0 && !string.IsNullOrEmpty(txtURLImagen.Text))
                     {
-                        int idNuevoProducto = negocio.Agregar(nuevoProducto);
+                        Imagen nuevaImg = new Imagen();
 
-                        if (idNuevoProducto > 0 && !string.IsNullOrEmpty(txtURLImagen.Text))
-                        {
-                            Imagen nuevaImg = new Imagen();
+                        nuevaImg.IDProducto = idNuevoProducto;
+                        nuevaImg.URLImagen = txtURLImagen.Text;
 
-                            nuevaImg.IDProducto = idNuevoProducto;
-                            nuevaImg.URLImagen = txtURLImagen.Text;
-
-                            ImagenNegocio negocioImagen = new ImagenNegocio();
-                            negocioImagen.Agregar(nuevaImg);
-                        }
+                        ImagenNegocio negocioImagen = new ImagenNegocio();
+                        negocioImagen.Agregar(nuevaImg);
                     }
+                }
 
 
                     Response.Redirect("Productos.aspx");
-                }
+                
             }
             catch (Exception ex)
             {

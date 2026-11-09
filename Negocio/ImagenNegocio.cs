@@ -69,6 +69,8 @@ namespace Negocio
                 datos.setearParametro("@id_producto", img.IDProducto);
                 datos.setearParametro("@url", img.URLImagen);
 
+                datos.ejecutarLectura();
+
             }
             catch (Exception ex)
             {

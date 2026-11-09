@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MiMaster.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="TPC_Comercio_Libreria.Productos" %>
+﻿<%@ Page Title="Lista de Productos" Language="C#" MasterPageFile="~/MiMaster.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="TPC_Comercio_Libreria.Productos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -53,7 +53,7 @@
                                     class="btn btn-sm btn-outline-secondary me-1">Editar</a>
                                 <a href='<%# "Producto.aspx?eliminar=" + Eval("IDProducto") %>'
                                     class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('¿Dar de baja este producto?');">Eliminar</a>
+                                    onclick="ReturnConfirm('¿Dar de baja este producto?');">Eliminar</a>
                             </td>
                         </tr>
                     </ItemTemplate>
