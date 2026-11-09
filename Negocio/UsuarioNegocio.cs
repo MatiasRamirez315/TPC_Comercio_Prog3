@@ -29,8 +29,6 @@ namespace Negocio
 
         public void modificar(Usuario usuario, string passwordPlano)
         {
-            // Si passwordPlano está vacío, Contrasena queda null
-            // y el SP mantiene el hash anterior (CASE interno del SP).
             if (!string.IsNullOrWhiteSpace(passwordPlano))
                 usuario.Contrasena = BC.HashPassword(passwordPlano);
 
@@ -58,7 +56,6 @@ namespace Negocio
             if (!BC.Verify(passwordPlano, usuario.Contrasena))
                 throw new Exception("Usuario o contraseña incorrectos.");
 
-            // Login OK: limpiamos el hash del objeto antes de devolverlo
             usuario.Contrasena = null;
             return usuario;
         }

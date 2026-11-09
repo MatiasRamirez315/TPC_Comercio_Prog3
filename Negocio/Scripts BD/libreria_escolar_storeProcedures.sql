@@ -527,6 +527,7 @@ BEGIN
     WHERE id_proveedor = @id_proveedor
 END
 GO
+
 CREATE PROCEDURE SP_Login
 (
     @usuario VARCHAR(50)
@@ -537,4 +538,34 @@ BEGIN
     FROM usuarios
     WHERE usuario = @usuario
 END
+GO
+
+create procedure SP_BuscarProductoPorID
+(
+    @id_producto int
+)
+as begin
+    select * from productos where id_producto = @id_producto
+end
+go
+
+create procedure SP_ModificarImagen
+(
+    @id_producto int,
+    @url varchar(500)
+)
+as begin
+
+    update imagenes set url = @url where id_producto = @id_producto
+end
+GO
+
+Create Procedure SP_ListarImagenesPorProducto
+(
+    @id_producto int
+)
+as
+begin
+    select * from imagenes where id_producto = @id_producto
+end
 GO

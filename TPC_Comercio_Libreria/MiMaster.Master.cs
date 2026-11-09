@@ -6,8 +6,6 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Si estamos en la página de login, no chequeamos sesión
-            // (aunque Login.aspx no usa master, esto es por si en el futuro lo hace)
             string pagina = System.IO.Path.GetFileName(Request.Url.AbsolutePath).ToLower();
 
             if (pagina != "login.aspx" && Session["IDUsuario"] == null)

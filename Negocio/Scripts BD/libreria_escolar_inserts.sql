@@ -210,3 +210,11 @@ INSERT INTO venta_detalle (id_venta, id_producto, cantidad, precio_compra_aplica
 (9,  14,  1,  1500.00, 30.00,  1950.00,   1950.00),
 (10,  6,  2,  1200.00, 30.00,  1560.00,   3120.00);
 GO
+
+USE libreria_escolar;
+GO
+
+UPDATE usuarios
+SET password = '$2a$11$PxTWyHbQ7v9JeI9OlzmpWeIkCRfuBxc..PQGjEPoLd2vh/oniBbYy'
+WHERE usuario IN ('admin', 'juan.perez', 'maria.gomez', 'carlos.lopez', 'ana.martinez');
+GO
