@@ -30,26 +30,32 @@ namespace AccesoDatos
                 while (datos.Lector.Read())
                 {
                     Producto aux = new Producto();
-                    aux.IDProducto = (int)datos.Lector["id_producto"];
-                    aux.Codigo = datos.Lector["codigo"].ToString();
-                    aux.Nombre = datos.Lector["nombre"].ToString();
+                    if (aux.Activo == false)
+                    {
+                        aux.IDProducto = (int)datos.Lector["id_producto"];
+                        aux.Codigo = datos.Lector["codigo"].ToString();
+                        aux.Nombre = datos.Lector["nombre"].ToString();
 
-                    aux.Marca = new Marca();
-                    aux.Marca.IDMarca = (int)datos.Lector["id_marca"];
-                    aux.Marca.Descripcion = datos.Lector["desc_marca"].ToString();
+                        aux.Marca = new Marca();
+                        aux.Marca.IDMarca = (int)datos.Lector["id_marca"];
+                        aux.Marca.Descripcion = datos.Lector["desc_marca"].ToString();
 
-                    aux.Categoria = new Categoria();
-                    aux.Categoria.IDCategoria = (int)datos.Lector["id_categoria"];
-                    aux.Categoria.Descripcion = datos.Lector["desc_categoria"].ToString();
+                        aux.Categoria = new Categoria();
+                        aux.Categoria.IDCategoria = (int)datos.Lector["id_categoria"];
+                        aux.Categoria.Descripcion = datos.Lector["desc_categoria"].ToString();
 
-                    aux.Tipo = new Tipo();
-                    aux.Tipo.IDTipo = (int)datos.Lector["id_tipo"];
-                    aux.Tipo.Descripcion = datos.Lector["desc_tipo"].ToString();
+                        aux.Tipo = new Tipo();
+                        aux.Tipo.IDTipo = (int)datos.Lector["id_tipo"];
+                        aux.Tipo.Descripcion = datos.Lector["desc_tipo"].ToString();
 
-                    aux.PrecioCompraUltimo = (decimal)datos.Lector["precio_compra_ultimo"];
-                    aux.StockActual = (int)datos.Lector["stock_actual"];
-                    aux.Activo = (bool)datos.Lector["activo"];
-                    lista.Add(aux);
+                        aux.PrecioCompraUltimo = (decimal)datos.Lector["precio_compra_ultimo"];
+                        aux.StockActual = (int)datos.Lector["stock_actual"];
+                        aux.Activo = (bool)datos.Lector["activo"];
+                        lista.Add(aux);
+
+
+                    }
+                    
                 }
 
                 return lista;

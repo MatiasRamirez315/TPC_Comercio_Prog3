@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
+using Dominio;
 
 namespace TPC_Comercio_Libreria
 {
@@ -13,6 +14,7 @@ namespace TPC_Comercio_Libreria
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
                 ProductoNegocio negocio = new ProductoNegocio();
@@ -21,6 +23,19 @@ namespace TPC_Comercio_Libreria
 
             }
 
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            ProductoNegocio negocio = new ProductoNegocio();
+
+            int idProducto = int.Parse(btn.CommandArgument);
+            Producto prod = new Producto();
+            prod.IDProducto = idProducto;
+            negocio.EliminarProducto(prod);
+
+            Response.Redirect("Productos.aspx");
         }
     }
 }

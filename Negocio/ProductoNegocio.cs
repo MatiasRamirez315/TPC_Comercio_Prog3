@@ -134,6 +134,29 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void EliminarProducto(Producto prod)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_EliminarProducto");
+                datos.setearParametro("@id_producto", prod.IDProducto );
+
+
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
        
     }
 }

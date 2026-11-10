@@ -21,7 +21,7 @@ namespace AccesoDatos
         }
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=localhost\\SQLEXPRESS; database=libreria_escolar; integrated security=true");
+            conexion = new SqlConnection("server=localhost\\SQLEXPRESS01; database=libreria_escolar; integrated security=true");
             comando = new SqlCommand();
         }
 

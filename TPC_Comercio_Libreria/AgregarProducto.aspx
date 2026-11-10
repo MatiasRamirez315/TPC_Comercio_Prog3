@@ -25,7 +25,6 @@
                     DataTextField="Descripcion" DataValueField="IDMarca">
                 </asp:DropDownList>
             </div>
-
             <div class="mb-3">
                 <label class="form-label">Categoria:</label>
                 <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select"

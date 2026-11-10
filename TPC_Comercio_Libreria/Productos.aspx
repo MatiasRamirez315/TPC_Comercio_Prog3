@@ -47,13 +47,14 @@
                             <td><%# Eval ("Tipo")%></td>
                             <td><%# Eval ("PrecioCompraUltimo")%></td>
                             <td><%# Eval ("StockActual")%></td>
+
                             <td class="text-center"><span class="badge bg-success">Activo</span></td>
                             <td class="text-center">
                                 <a href='<%# "AgregarProducto.aspx?id=" + Eval("IDProducto") %>'
                                     class="btn btn-sm btn-outline-secondary me-1">Editar</a>
-                                <a href='<%# "Producto.aspx?eliminar=" + Eval("IDProducto") %>'
-                                    class="btn btn-sm btn-outline-danger"
-                                    onclick="ReturnConfirm('¿Dar de baja este producto?');">Eliminar</a>
+                                <asp:Button ID="btnEliminar" runat="server" class="btn btn-sm btn-outline-danger"
+                                    Text="Eliminar" OnClick="btnEliminar_Click" CommandArgument='<%# Eval("IDProducto") %>'
+                                    OnClientClick="return confirm('¿Está seguro de que desea eliminar este producto?');" />
                             </td>
                         </tr>
                     </ItemTemplate>
