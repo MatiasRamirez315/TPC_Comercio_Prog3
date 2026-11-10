@@ -121,6 +121,10 @@ namespace AccesoDatos
                 datos.setearParametro("@id_proveedor", id);
                 datos.EjecutarAccion();
             }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 datos.cerrarConexion();
