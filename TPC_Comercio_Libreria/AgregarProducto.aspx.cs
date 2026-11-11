@@ -54,11 +54,12 @@ namespace TPC_Comercio_Libreria
                     int idProductoModificado = int.Parse(id);
 
                     ProductoNegocio productoNegocio = new ProductoNegocio();
-
+                    ImagenNegocio imagenNegocio = new ImagenNegocio();
                     Producto prod = productoNegocio.ObtenerPorID(idProductoModificado);
-
+                    
                     if (prod != null)
                     {
+                        
 
                         txtNombre.Text = prod.Nombre;
                         txtCodigo.Text = prod.Codigo;
@@ -180,8 +181,9 @@ namespace TPC_Comercio_Libreria
                         nuevaImg.URLImagen = txtURLImagen.Text;
 
                         ImagenNegocio negocioImagen = new ImagenNegocio();
-                        negocioImagen.ModificarImagen(nuevaImg); //revisar aca
+                        negocioImagen.ModificarImagen(nuevaImg); 
                     }
+                    Session["MensajeExito"] = "El producto se modificó correctamente";
                 }
                 else
                 {
@@ -197,10 +199,10 @@ namespace TPC_Comercio_Libreria
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.Agregar(nuevaImg);
                     }
+                        Session["MensajeExito"] = "El producto se agregó correctamente";
                 }
 
-
-                    Response.Redirect("Productos.aspx");
+                Response.Redirect("Productos.aspx");
                 
             }
             catch (Exception ex)

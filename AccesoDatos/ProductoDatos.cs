@@ -22,16 +22,17 @@ namespace AccesoDatos
                     "left join marcas m on p.id_marca = m.id_marca " +
                     "left join categorias c on p.id_categoria = c.id_categoria " +
                     "left join tipos t on p.id_tipo = t.id_tipo " +
-                    "where p.activo = 1 order by p.nombre"
-                );
+                    "order by p.nombre"
+                    //where p.activo = 1 faltaria para que muestre solo los activos                
+                    );
 
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Producto aux = new Producto();
-                    if (aux.Activo == false)
-                    {
+                    
+                    
                         aux.IDProducto = (int)datos.Lector["id_producto"];
                         aux.Codigo = datos.Lector["codigo"].ToString();
                         aux.Nombre = datos.Lector["nombre"].ToString();
@@ -54,7 +55,7 @@ namespace AccesoDatos
                         lista.Add(aux);
 
 
-                    }
+                    
                     
                 }
 

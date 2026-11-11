@@ -12,6 +12,10 @@
         <a href="AgregarProducto.aspx" class="btn btn-primary">+ Nuevo Producto</a>
     </div>
 
+    <asp:Label ID="lblMensaje" runat="server"
+        CssClass="alert alert-success d-block mb-3"
+        Visible="false" />
+
     <div class="page-card">
 
         <div class="page-toolbar">
@@ -48,7 +52,12 @@
                             <td><%# Eval ("PrecioCompraUltimo")%></td>
                             <td><%# Eval ("StockActual")%></td>
 
-                            <td class="text-center"><span class="badge bg-success">Activo</span></td>
+                            <td class="text-center">
+                                <%# Convert.ToBoolean(Eval("Activo"))
+                                      ? "<span class='badge bg-success'>Activo</span>"
+                                         : "<span class='badge bg-secondary'>Inactivo</span>" %>
+                            </td>
+
                             <td class="text-center">
                                 <a href='<%# "AgregarProducto.aspx?id=" + Eval("IDProducto") %>'
                                     class="btn btn-sm btn-outline-secondary me-1">Editar</a>

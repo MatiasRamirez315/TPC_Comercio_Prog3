@@ -119,7 +119,7 @@ namespace Negocio
                 datos.setearParametro("@precio_compra_ultimo", modificar.PrecioCompraUltimo);
                 datos.setearParametro("@stock_actual", modificar.StockActual);
                 datos.setearParametro("@stock_minimo", modificar.StockMinimo);
-                datos.setearParametro("@activo", true); //hay que tener cuidado con el rollback de la foto porque todo vuelve atras
+                datos.setearParametro("@activo", true); 
 
                 datos.EjecutarAccion();
 
@@ -143,7 +143,7 @@ namespace Negocio
             {
                 datos.setearProcedimiento("SP_EliminarProducto");
                 datos.setearParametro("@id_producto", prod.IDProducto );
-
+              
 
                 datos.EjecutarAccion();
             }

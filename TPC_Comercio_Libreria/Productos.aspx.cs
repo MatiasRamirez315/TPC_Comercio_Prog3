@@ -17,10 +17,19 @@ namespace TPC_Comercio_Libreria
 
             if (!IsPostBack)
             {
+
+
                 ProductoNegocio negocio = new ProductoNegocio();
                 RepProductos.DataSource = negocio.Listar();
                 RepProductos.DataBind();
 
+                if (Session["MensajeExito"] != null)
+                {
+                    lblMensaje.Text = Session["MensajeExito"].ToString();
+                    lblMensaje.Visible = true;
+
+                    Session["MensajeExito"] = null;
+                }
             }
 
         }
@@ -35,6 +44,7 @@ namespace TPC_Comercio_Libreria
             prod.IDProducto = idProducto;
             negocio.EliminarProducto(prod);
 
+            Session["MensajeExito"] = "El producto se elimino correctamente";
             Response.Redirect("Productos.aspx");
         }
     }
