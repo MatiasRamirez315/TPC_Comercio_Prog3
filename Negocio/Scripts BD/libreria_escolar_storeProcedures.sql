@@ -146,6 +146,8 @@ as begin
    end
 GO
 
+
+
 create procedure SP_EliminarProducto
 (
     @id_producto INT
@@ -559,6 +561,30 @@ as begin
     update imagenes set url = @url where id_producto = @id_producto
 end
 GO
+
+ALTER PROCEDURE SP_ModificarImagen
+    @id_producto int,
+    @url varchar(500)
+as
+BEGIN
+    
+    IF EXISTS (SELECT 1 FROM IMAGENES WHERE id_producto = @id_producto)
+    begin
+    
+        update IMAGENES 
+        set url = @url 
+        where id_producto = @id_producto;
+    end
+    else
+    begin
+        
+        insert into IMAGENES (id_producto, url) 
+        values (@id_producto, @url);
+    end
+end
+
+go
+
 
 Create Procedure SP_ListarImagenesPorProducto
 (
