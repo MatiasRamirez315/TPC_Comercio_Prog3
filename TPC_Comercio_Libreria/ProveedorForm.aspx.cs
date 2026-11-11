@@ -43,6 +43,34 @@ namespace TPC_Comercio_Libreria
                 return;
             }
 
+            string cuit = txtCuit.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(cuit))
+            {
+                ProveedorNegocio validacion = new ProveedorNegocio();
+
+                if (!HayIdEnQueryString() && validacion.ExisteCuitProveedor(cuit))
+                {
+                    mostrarError("el cuit ingresado ya se encuentra en uso");
+                    return;
+                }
+
+                if (HayIdEnQueryString())
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+
+                    Proveedor proveedorExiste = validacion.listarPorId(id);
+
+                    if (proveedorExiste != null && proveedorExiste.Cuit != cuit)
+                    {
+                        if (validacion.ExisteCuitProveedor(cuit))
+                        {
+                            mostrarError("El cuit ya pertenece a otro proveedor");
+                            return;
+                        }
+                    }
+                }
+            }
+
             try
             {
                 ProveedorNegocio negocio = new ProveedorNegocio();

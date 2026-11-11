@@ -34,5 +34,11 @@ namespace Negocio
             ClienteDatos datos = new ClienteDatos();
             datos.eliminar(id);
         }
+
+        public bool ExisteCuitCliente(string Cuit)
+        {
+            ClienteDatos datos = new ClienteDatos();
+            return datos.ExisteCuitCliente(Cuit);
+        }
     }
 }

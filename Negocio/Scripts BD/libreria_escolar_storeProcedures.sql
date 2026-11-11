@@ -604,3 +604,23 @@ as
 begin 
     select * from productos where codigo = @codigo
 end
+go
+
+create procedure SP_ExisteCuitProveedores
+    (
+        @cuit varchar(20)
+    )
+    as
+    Begin
+        select * from proveedores where cuit = @cuit
+    end
+go
+
+create procedure SP_ExisteCuitClientes
+    (
+        @cuit varchar(20)
+    )
+    as
+    Begin
+        select * from clientes where cuit = @cuit
+    end

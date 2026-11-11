@@ -42,6 +42,34 @@ namespace TPC_Comercio_Libreria
                 mostrarError("El email no tiene un formato válido.");
                 return;
             }
+            
+            string cuit = txtCuit.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(cuit))
+            {
+                ClienteNegocio validacion = new ClienteNegocio();
+
+                if (!HayIdEnQueryString() && validacion.ExisteCuitCliente(cuit))
+                {
+                    mostrarError("el cuit ingresado ya se encuentra en uso");
+                    return;
+                }
+
+                if (HayIdEnQueryString())
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+
+                    Cliente clienteExiste = validacion.listarPorId(id);
+
+                    if (clienteExiste != null && clienteExiste.Cuit != cuit)
+                    {
+                        if (validacion.ExisteCuitCliente(cuit))
+                        {
+                            mostrarError("El cuit ya pertenece a otro cliente");
+                            return;
+                        }
+                    }
+                }
+            }
 
             try
             {

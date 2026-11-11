@@ -35,5 +35,11 @@ namespace Negocio
             ProveedorDatos datos = new ProveedorDatos();
             datos.eliminar(id);
         }
+
+        public bool ExisteCuitProveedor(string Cuit)
+        {
+            ProveedorDatos datos = new ProveedorDatos();
+            return datos.ExisteCuitProveedor(Cuit);
+        }
     }
 }

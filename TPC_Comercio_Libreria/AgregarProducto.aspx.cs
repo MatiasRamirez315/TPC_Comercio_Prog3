@@ -15,8 +15,6 @@ namespace TPC_Comercio_Libreria
         {
             if (!IsPostBack)
             {
-
-
                 try
                 {
                     MarcaNegocio marcaNegocio = new MarcaNegocio();

@@ -130,5 +130,33 @@ namespace AccesoDatos
                 datos.cerrarConexion();
             }
         }
+
+        public bool ExisteCuitCliente(string cuit)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_ExisteCuitClientes");
+                datos.setearParametro("@cuit", cuit);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

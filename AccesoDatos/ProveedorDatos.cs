@@ -137,5 +137,33 @@ namespace AccesoDatos
                 return DBNull.Value;
             return valor.Trim();
         }
+
+        public bool ExisteCuitProveedor(string cuit)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_ExisteCuitProveedores");
+                datos.setearParametro("@cuit", cuit);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
