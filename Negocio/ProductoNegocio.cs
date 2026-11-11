@@ -157,6 +157,35 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool ExisteCodigoProducto(string codigo)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_VerificarCodigoProducto");
+                datos.setearParametro("@codigo", codigo);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    int cantidad = int.Parse(datos.Lector[0].ToString());
+                    return cantidad > 0;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
        
     }
 }

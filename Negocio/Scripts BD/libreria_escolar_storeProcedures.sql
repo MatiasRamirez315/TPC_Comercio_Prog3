@@ -595,3 +595,12 @@ begin
     select * from imagenes where id_producto = @id_producto
 end
 GO
+
+create Procedure SP_VerificarCodigoProducto
+(
+    @codigo varchar(20)
+)
+as
+begin 
+    select * from productos where codigo = @codigo
+end

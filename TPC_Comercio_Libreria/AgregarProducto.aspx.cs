@@ -111,6 +111,14 @@ namespace TPC_Comercio_Libreria
                 if (!string.IsNullOrEmpty(txtCodigo.Text))
                 {
                     nuevoProducto.Codigo = txtCodigo.Text;
+
+                    ProductoNegocio CodigoValidacion = new ProductoNegocio();
+                    
+                    if (CodigoValidacion.ExisteCodigoProducto(nuevoProducto.Codigo))
+                    {
+                        lblError.Text = "el codigo ingresado ya pertenece a otro producto";
+                        return;
+                    }
                 }
                 else
                 {
