@@ -15,21 +15,57 @@ namespace TPC_Comercio_Libreria
     {
 
         /// <summary>
-        /// cardUsuarios control.
+        /// cardCompras control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardUsuarios;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardCompras;
 
         /// <summary>
-        /// cardReportes control.
+        /// cardMarcas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardReportes;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardMarcas;
+
+        /// <summary>
+        /// cardCategorias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardCategorias;
+
+        /// <summary>
+        /// cardTipos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardTipos;
+
+        /// <summary>
+        /// seccionContactos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl seccionContactos;
+
+        /// <summary>
+        /// seccionAdministracion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl seccionAdministracion;
     }
 }

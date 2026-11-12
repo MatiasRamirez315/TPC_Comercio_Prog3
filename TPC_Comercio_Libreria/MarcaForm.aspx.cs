@@ -4,7 +4,7 @@ using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
-    public partial class MarcaForm : System.Web.UI.Page
+    public partial class MarcaForm : PaginaSoloAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {

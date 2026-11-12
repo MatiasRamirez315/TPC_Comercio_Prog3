@@ -5,7 +5,7 @@ using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
-    public partial class Tipos : System.Web.UI.Page
+    public partial class Tipos : PaginaSoloAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {

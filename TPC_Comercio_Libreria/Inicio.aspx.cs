@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TPC_Comercio_Libreria
 {
@@ -13,8 +8,12 @@ namespace TPC_Comercio_Libreria
         {
             if (Session["Rol"] == null || Session["Rol"].ToString() != "ADMIN")
             {
-                cardUsuarios.Visible = false;
-                cardReportes.Visible = false;
+                cardCompras.Visible = false;
+                cardMarcas.Visible = false;
+                cardCategorias.Visible = false;
+                cardTipos.Visible = false;
+                seccionContactos.Visible = false;
+                seccionAdministracion.Visible = false;
             }
         }
     }

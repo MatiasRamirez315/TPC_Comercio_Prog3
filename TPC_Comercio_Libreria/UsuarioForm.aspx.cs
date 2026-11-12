@@ -4,7 +4,7 @@ using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
-    public partial class UsuarioForm : System.Web.UI.Page
+    public partial class UsuarioForm : PaginaSoloAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -84,7 +84,6 @@ namespace TPC_Comercio_Libreria
 
                     usuario.NombreUsuario = txtUsuario.Text.Trim();
                     usuario.Rol = ddlRol.SelectedValue;
-                    // usuario.Activo se mantiene
 
                     negocio.modificar(usuario, password);
                     Session["MensajeExito"] = "Usuario modificado correctamente.";

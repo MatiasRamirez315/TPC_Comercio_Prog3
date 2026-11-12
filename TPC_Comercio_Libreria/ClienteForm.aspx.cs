@@ -4,7 +4,7 @@ using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
-    public partial class ClienteForm : System.Web.UI.Page
+    public partial class ClienteForm : PaginaSoloAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {

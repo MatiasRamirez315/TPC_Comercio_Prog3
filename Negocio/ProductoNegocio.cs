@@ -171,7 +171,7 @@ namespace Negocio
                 if (datos.Lector.Read())
                 {
                     int cantidad = int.Parse(datos.Lector[0].ToString());
-                    return cantidad > 0;
+                    return cantidad > 1;
                 }
                 return false;
 
