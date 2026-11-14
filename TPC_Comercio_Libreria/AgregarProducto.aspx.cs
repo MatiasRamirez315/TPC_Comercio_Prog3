@@ -9,7 +9,7 @@ using Negocio;
 
 namespace TPC_Comercio_Libreria
 {
-    public partial class AgregarProducto : System.Web.UI.Page
+    public partial class AgregarProducto : PaginaSoloAdmin  
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,32 +37,27 @@ namespace TPC_Comercio_Libreria
                 }
                 catch (Exception ex)
                 {
-
                     throw ex;
                 }
 
-            
-
-            string id = Request.QueryString["id"];
+                string id = Request.QueryString["id"];
                 if (id != null)
                 {
-                h1Titulo.InnerText = "Modificar Producto";
-                    
+                    h1Titulo.InnerText = "Modificar Producto";
+
                     hdnID.Value = id;
                     int idProductoModificado = int.Parse(id);
 
                     ProductoNegocio productoNegocio = new ProductoNegocio();
                     ImagenNegocio imagenNegocio = new ImagenNegocio();
                     Producto prod = productoNegocio.ObtenerPorID(idProductoModificado);
-                    
+
                     if (prod != null)
                     {
-                        
-
                         txtNombre.Text = prod.Nombre;
                         txtCodigo.Text = prod.Codigo;
                         txtStockActual.Text = prod.StockActual.ToString();
-                        txtStockMin.Text = prod.StockMinimo.ToString(); //sin esto no me precargaba los decimal
+                        txtStockMin.Text = prod.StockMinimo.ToString();
                         txtPorcentajeGanancia.Text = prod.PorcentajeGanancia.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
                         txtPrecioCompraUltimo.Text = prod.PrecioCompraUltimo.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
 
@@ -76,23 +71,25 @@ namespace TPC_Comercio_Libreria
                             imgVistaPrevia.ImageUrl = prod.Imagenes[0].URLImagen;
                         }
 
-
                         btnAceptar.Text = "Modificar";
-
                     }
                 }
             }
-
-
         }
 
         protected void txtURLImagen_TextChanged(object sender, EventArgs e)
         {
             imgVistaPrevia.ImageUrl = txtURLImagen.Text;
-
         }
+
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            if (Session["Rol"] == null || Session["Rol"].ToString() != "ADMIN")
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             try
             {
                 Producto nuevoProducto = new Producto();
@@ -111,7 +108,7 @@ namespace TPC_Comercio_Libreria
                     nuevoProducto.Codigo = txtCodigo.Text;
 
                     ProductoNegocio CodigoValidacion = new ProductoNegocio();
-                    
+
                     if (CodigoValidacion.ExisteCodigoProducto(nuevoProducto.Codigo))
                     {
                         lblError.Text = "el codigo ingresado ya pertenece a otro producto";
@@ -129,7 +126,6 @@ namespace TPC_Comercio_Libreria
 
                 nuevoProducto.Categoria = new Categoria();
                 nuevoProducto.Categoria.IDCategoria = int.Parse(ddlCategoria.SelectedValue);
-
 
                 nuevoProducto.Tipo = new Tipo();
                 nuevoProducto.Tipo.IDTipo = int.Parse(ddlTipo.SelectedValue);
@@ -182,12 +178,11 @@ namespace TPC_Comercio_Libreria
                     if (!string.IsNullOrEmpty(txtURLImagen.Text))
                     {
                         Imagen nuevaImg = new Imagen();
-
                         nuevaImg.IDProducto = nuevoProducto.IDProducto;
                         nuevaImg.URLImagen = txtURLImagen.Text;
 
                         ImagenNegocio negocioImagen = new ImagenNegocio();
-                        negocioImagen.ModificarImagen(nuevaImg); 
+                        negocioImagen.ModificarImagen(nuevaImg);
                     }
                     Session["MensajeExito"] = "El producto se modificó correctamente";
                 }
@@ -198,23 +193,20 @@ namespace TPC_Comercio_Libreria
                     if (idNuevoProducto > 0 && !string.IsNullOrEmpty(txtURLImagen.Text))
                     {
                         Imagen nuevaImg = new Imagen();
-
                         nuevaImg.IDProducto = idNuevoProducto;
                         nuevaImg.URLImagen = txtURLImagen.Text;
 
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.Agregar(nuevaImg);
                     }
-                        Session["MensajeExito"] = "El producto se agregó correctamente";
+                    Session["MensajeExito"] = "El producto se agregó correctamente";
                 }
 
                 Response.Redirect("Productos.aspx");
-                
             }
             catch (Exception ex)
             {
                 throw ex;
-
             }
         }
     }
