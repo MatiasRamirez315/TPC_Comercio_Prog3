@@ -624,3 +624,146 @@ create procedure SP_ExisteCuitClientes
     Begin
         select * from clientes where cuit = @cuit
     end
+GO
+
+-- =========================================================
+-- ALTA DE VENTA 
+-- =========================================================
+CREATE PROCEDURE SP_AltaVenta
+(
+    @id_cliente  INT,
+    @id_usuario  INT,
+    @metodo_pago VARCHAR(30),
+    @total       DECIMAL(14,2)
+)
+AS
+BEGIN
+    INSERT INTO ventas (id_cliente, id_usuario, fecha, estado, total, metodo_pago)
+    VALUES (@id_cliente, @id_usuario, GETDATE(), 'CONFIRMADA', @total, @metodo_pago);
+
+    SELECT CAST(SCOPE_IDENTITY() AS INT);
+END
+GO
+
+-- =========================================================
+-- ALTA DE LINEA DE DETALLE
+-- =========================================================
+CREATE PROCEDURE SP_AltaVentaDetalle
+(
+    @id_venta                     INT,
+    @id_producto                  INT,
+    @cantidad                     INT,
+    @precio_compra_aplicado       DECIMAL(12,2),
+    @porcentaje_ganancia_aplicado DECIMAL(5,2),
+    @precio_unitario              DECIMAL(12,2),
+    @subtotal                     DECIMAL(14,2)
+)
+AS
+BEGIN
+    INSERT INTO venta_detalle 
+    (id_venta, id_producto, cantidad, precio_compra_aplicado, porcentaje_ganancia_aplicado, precio_unitario, subtotal)
+    VALUES 
+    (@id_venta, @id_producto, @cantidad, @precio_compra_aplicado, @porcentaje_ganancia_aplicado, @precio_unitario, @subtotal);
+END
+GO
+
+-- =========================================================
+-- DESCONTAR STOCK (con validacion)
+-- =========================================================
+CREATE PROCEDURE SP_DescontarStockVenta
+(
+    @id_producto INT,
+    @cantidad    INT
+)
+AS
+BEGIN
+    UPDATE productos
+    SET stock_actual = stock_actual - @cantidad
+    WHERE id_producto = @id_producto
+      AND stock_actual >= @cantidad;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        DECLARE @nombre VARCHAR(150);
+        SELECT @nombre = nombre FROM productos WHERE id_producto = @id_producto;
+        RAISERROR('Stock insuficiente para el producto: %s', 16, 1, @nombre);
+    END
+END
+GO
+
+-- =========================================================
+-- OBTENER VENTA
+-- =========================================================
+CREATE PROCEDURE SP_ObtenerVenta
+(
+    @id_venta INT
+)
+AS
+BEGIN
+    SELECT 
+        v.id_venta,
+        v.fecha,
+        v.id_cliente,
+        c.nombre AS cliente,
+        v.id_usuario,
+        u.usuario AS vendedor,
+        v.estado,
+        v.total,
+        v.metodo_pago
+    FROM ventas v
+    INNER JOIN clientes c ON c.id_cliente = v.id_cliente
+    INNER JOIN usuarios u ON u.id_usuario = v.id_usuario
+    WHERE v.id_venta = @id_venta;
+END
+GO
+
+-- =========================================================
+-- LISTAR DETALLE DE UNA VENTA
+-- =========================================================
+CREATE PROCEDURE SP_ListarVentaDetalle
+(
+    @id_venta INT
+)
+AS
+BEGIN
+    SELECT 
+        vd.id_venta_detalle,
+        vd.id_producto,
+        p.codigo,
+        p.nombre AS producto,
+        vd.cantidad,
+        vd.precio_compra_aplicado,
+        vd.porcentaje_ganancia_aplicado,
+        vd.precio_unitario,
+        vd.subtotal
+    FROM venta_detalle vd
+    INNER JOIN productos p ON p.id_producto = vd.id_producto
+    WHERE vd.id_venta = @id_venta
+    ORDER BY vd.id_venta_detalle;
+END
+GO
+
+-- =========================================================
+-- CANCELAR VENTA (baja logica + restaurar stock)
+-- =========================================================
+CREATE PROCEDURE SP_CancelarVenta
+(
+    @id_venta INT
+)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM ventas WHERE id_venta = @id_venta AND estado = 'CANCELADA')
+    BEGIN
+        RAISERROR('La venta ya está cancelada.', 16, 1);
+        RETURN;
+    END
+
+    UPDATE p
+    SET p.stock_actual = p.stock_actual + vd.cantidad
+    FROM productos p
+    INNER JOIN venta_detalle vd ON vd.id_producto = p.id_producto
+    WHERE vd.id_venta = @id_venta;
+
+    UPDATE ventas SET estado = 'CANCELADA' WHERE id_venta = @id_venta;
+END
+GO

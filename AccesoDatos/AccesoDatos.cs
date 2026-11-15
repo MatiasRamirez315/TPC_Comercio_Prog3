@@ -14,6 +14,7 @@ namespace AccesoDatos
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
+        private SqlTransaction transaccion;
 
         public SqlDataReader Lector
         {
@@ -94,6 +95,38 @@ namespace AccesoDatos
                 lector.Close();
             }
             conexion.Close();
+        }
+        public void iniciarTransaccion()
+        {
+            conexion.Open();
+            transaccion = conexion.BeginTransaction();
+        }
+
+        public void confirmarTransaccion()
+        {
+            transaccion.Commit();
+            conexion.Close();
+        }
+
+        public void cancelarTransaccion()
+        {
+            try { transaccion.Rollback(); } catch { }
+            if (conexion.State == System.Data.ConnectionState.Open)
+                conexion.Close();
+        }
+
+        public int ejecutarAccionScalarTransaccion()
+        {
+            comando.Connection = conexion;
+            comando.Transaction = transaccion;
+            return (int)comando.ExecuteScalar();
+        }
+
+        public void ejecutarAccionTransaccion()
+        {
+            comando.Connection = conexion;
+            comando.Transaction = transaccion;
+            comando.ExecuteNonQuery();
         }
     }
 }

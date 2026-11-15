@@ -66,6 +66,7 @@
     <Compile Include="ProveedorNegocio.cs" />
     <Compile Include="TipoNegocio.cs" />
     <Compile Include="UsuarioNegocio.cs" />
+    <Compile Include="VentaNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts BD\libreria_escolar.sql" />

@@ -68,6 +68,7 @@
     <Compile Include="ProveedorDatos.cs" />
     <Compile Include="TipoDatos.cs" />
     <Compile Include="UsuarioDatos.cs" />
+    <Compile Include="VentaDatos.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dominio\Dominio.csproj">
