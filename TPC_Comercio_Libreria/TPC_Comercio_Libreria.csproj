@@ -99,6 +99,7 @@
     <Content Include="Tipos.aspx" />
     <Content Include="UsuarioForm.aspx" />
     <Content Include="Usuarios.aspx" />
+    <Content Include="VentaDetalle.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VentaDetalle.aspx.cs">
+      <DependentUpon>VentaDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VentaDetalle.aspx.designer.cs">
+      <DependentUpon>VentaDetalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas.aspx.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>
