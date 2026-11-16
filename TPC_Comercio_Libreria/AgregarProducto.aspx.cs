@@ -56,10 +56,6 @@ namespace TPC_Comercio_Libreria
                     {
                         txtNombre.Text = prod.Nombre;
                         txtCodigo.Text = prod.Codigo;
-                        txtStockActual.Text = prod.StockActual.ToString();
-                        txtStockMin.Text = prod.StockMinimo.ToString();
-                        txtPorcentajeGanancia.Text = prod.PorcentajeGanancia.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
-                        txtPrecioCompraUltimo.Text = prod.PrecioCompraUltimo.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
 
                         ddlCategoria.SelectedValue = prod.Categoria.IDCategoria.ToString();
                         ddlMarca.SelectedValue = prod.Marca.IDMarca.ToString();
@@ -130,42 +126,6 @@ namespace TPC_Comercio_Libreria
                 nuevoProducto.Tipo = new Tipo();
                 nuevoProducto.Tipo.IDTipo = int.Parse(ddlTipo.SelectedValue);
 
-                if (!string.IsNullOrEmpty(txtPorcentajeGanancia.Text) && decimal.Parse(txtPorcentajeGanancia.Text) > 0)
-                {
-                    nuevoProducto.PorcentajeGanancia = decimal.Parse(txtPorcentajeGanancia.Text, System.Globalization.CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    lblError.Text = "El porcentaje de ganancia debe ser mayor a 0.";
-                    return;
-                }
-                if (!string.IsNullOrEmpty(txtPrecioCompraUltimo.Text) && decimal.Parse(txtPrecioCompraUltimo.Text) > 0)
-                {
-                    nuevoProducto.PrecioCompraUltimo = decimal.Parse(txtPrecioCompraUltimo.Text, System.Globalization.CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    lblError.Text = "El precio de compra del producto debe ser mayor a 0.";
-                    return;
-                }
-                if (!string.IsNullOrEmpty(txtStockActual.Text) && int.Parse(txtStockActual.Text) >= 0)
-                {
-                    nuevoProducto.StockActual = int.Parse(txtStockActual.Text);
-                }
-                else
-                {
-                    lblError.Text = "El stock actual debe ser mayor o igual a 0.";
-                    return;
-                }
-                if (!string.IsNullOrEmpty(txtStockMin.Text) && decimal.Parse(txtStockMin.Text) >= 0)
-                {
-                    nuevoProducto.StockMinimo = int.Parse(txtStockMin.Text);
-                }
-                else
-                {
-                    lblError.Text = "El stock mínimo debe ser mayor o igual a 0";
-                    return;
-                }
 
                 ProductoNegocio negocio = new ProductoNegocio();
 
