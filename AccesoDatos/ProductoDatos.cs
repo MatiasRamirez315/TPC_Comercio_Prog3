@@ -53,9 +53,6 @@ namespace AccesoDatos
                         aux.StockActual = (int)datos.Lector["stock_actual"];
                         aux.Activo = (bool)datos.Lector["activo"];
                         lista.Add(aux);
-
-
-                    
                     
                 }
 

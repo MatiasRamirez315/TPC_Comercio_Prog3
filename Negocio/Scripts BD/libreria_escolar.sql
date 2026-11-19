@@ -104,6 +104,13 @@ CREATE TABLE compras (
 );
 GO
 
+--se agrega el campo estado a la tabla de compras para filtrar canceladas,recibidas y pendientes
+Alter Table compras add estado int not null constraint DF_compras_estado default (1);
+go
+--se setea en estado 1, quedarian pendientes
+Update compras Set estado = 1 where estado is null;
+go
+
 CREATE TABLE compra_detalle (
   id_compra_detalle INT IDENTITY(1,1) PRIMARY KEY,
   id_compra INT NOT NULL,

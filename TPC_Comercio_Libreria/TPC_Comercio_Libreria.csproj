@@ -86,6 +86,7 @@
     <Content Include="Categorias.aspx" />
     <Content Include="ClienteForm.aspx" />
     <Content Include="Clientes.aspx" />
+    <Content Include="Compras.aspx" />
     <Content Include="Content\Styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
@@ -139,6 +140,13 @@
     </Compile>
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Compras.aspx.cs">
+      <DependentUpon>Compras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Compras.aspx.designer.cs">
+      <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -299,6 +299,28 @@ BEGIN
 END
 GO
 
+--Se agrega el campo estado a la lista de compras
+
+ALTER PROCEDURE SP_ListarCompras
+AS
+BEGIN
+    SELECT
+        c.id_compra,
+        c.fecha,
+        c.id_proveedor,
+        p.nombre        AS proveedor,
+        c.id_usuario,
+        u.usuario       AS usuario,
+        c.numero_factura,
+        c.total,
+        c.estado
+    FROM compras c
+    INNER JOIN proveedores p ON p.id_proveedor = c.id_proveedor
+    INNER JOIN usuarios u    ON u.id_usuario   = c.id_usuario
+    ORDER BY c.fecha DESC
+END
+GO
+--------------------------------------------------------------------------------------------------
 CREATE PROCEDURE SP_ObtenerCliente
 (
     @id_cliente INT
