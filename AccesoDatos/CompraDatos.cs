@@ -49,5 +49,27 @@ namespace AccesoDatos
             }
             return lista;
         }
+
+        public void Cancelar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_CancelarCompra");
+                datos.setearParametro("@id_compra", id);
+                datos.EjecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

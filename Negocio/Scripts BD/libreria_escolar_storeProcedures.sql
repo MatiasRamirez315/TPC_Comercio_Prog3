@@ -789,3 +789,12 @@ BEGIN
     UPDATE ventas SET estado = 'CANCELADA' WHERE id_venta = @id_venta;
 END
 GO
+
+Create Procedure SP_CancelarCompra
+(
+    @id_compra INT
+)
+as
+Begin
+update compras set estado = 0 where id_compra = @id_compra
+END

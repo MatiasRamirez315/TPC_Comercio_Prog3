@@ -15,5 +15,11 @@ namespace Negocio
             CompraDatos datos = new CompraDatos();
             return datos.Listar();
         }
+
+        public void CancelarCompra(int IdCompra)
+        {
+            CompraDatos datos = new CompraDatos();
+            datos.Cancelar(IdCompra);
+        }
     }
 }
