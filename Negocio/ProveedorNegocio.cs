@@ -41,5 +41,11 @@ namespace Negocio
             ProveedorDatos datos = new ProveedorDatos();
             return datos.ExisteCuitProveedor(Cuit);
         }
+
+        public List<Proveedor> ListarProveedorXProducto(int idProducto)
+        {
+            ProveedorDatos datos = new ProveedorDatos();
+            return datos.ListarProveedorXProducto(idProducto);
+        }
     }
 }

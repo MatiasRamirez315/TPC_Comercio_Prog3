@@ -9,9 +9,6 @@
             <h1>Productos</h1>
             <p>Listado de los productos de la librería</p>
         </div>
-        <asp:PlaceHolder ID="phNuevoProducto" runat="server">
-            <a href="AgregarProducto.aspx" class="btn btn-primary">+ Nuevo Producto</a>
-        </asp:PlaceHolder>
     </div>
 
     <asp:Label ID="lblMensaje" runat="server"

@@ -15,6 +15,15 @@ namespace TPC_Comercio_Libreria
     {
 
         /// <summary>
+        /// Control phNuevoProducto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phNuevoProducto;
+
+        /// <summary>
         /// Control lblError.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace TPC_Comercio_Libreria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlProducto;
+
+        /// <summary>
+        /// Control ddlProveedor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
 
         /// <summary>
         /// Control txtCantidad.
@@ -69,6 +87,15 @@ namespace TPC_Comercio_Libreria
         protected global::System.Web.UI.WebControls.TextBox txtPorcentajeGanancia;
 
         /// <summary>
+        /// Control txtNumeroFactura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumeroFactura;
+
+        /// <summary>
         /// Control imgProducto.
         /// </summary>
         /// <remarks>
@@ -94,5 +121,14 @@ namespace TPC_Comercio_Libreria
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotal;
+
+        /// <summary>
+        /// Control btnRegistrar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRegistrar;
     }
 }

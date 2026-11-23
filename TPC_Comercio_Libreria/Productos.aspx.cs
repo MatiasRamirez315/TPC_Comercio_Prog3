@@ -22,7 +22,7 @@ namespace TPC_Comercio_Libreria
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            phNuevoProducto.Visible = EsAdmin;
+            
             thAcciones.Visible = EsAdmin;
 
             if (!IsPostBack)

@@ -71,5 +71,31 @@ namespace AccesoDatos
                 datos.cerrarConexion();
             }
         }
+
+        public void AgregarCompra (Compra compra)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_AgregarCompra");
+                datos.setearParametro("@id_proveedor", compra.IDProveedor.IDProveedor);
+                datos.setearParametro("@id_usuario", compra.IDUsuario.IDUsuario);
+                //compra.Fecha = DateTime.Now;
+                //datos.setearParametro("@fecha" , compra.Fecha);
+                datos.setearParametro("@numero_factura", compra.NumeroFactura);
+                datos.setearParametro("@total", compra.Total);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

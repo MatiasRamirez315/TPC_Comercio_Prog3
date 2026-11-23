@@ -798,3 +798,36 @@ as
 Begin
 update compras set estado = 0 where id_compra = @id_compra
 END
+GO
+
+--- lista proveedores por producto para la compra
+Create Procedure SP_ListarProveedorPorProducto
+(
+    @id_producto INT
+)
+as 
+Begin
+    select pv.id_proveedor, pv.nombre from proveedores pv
+    inner join producto_proveedor pp on pp.id_proveedor = pv.id_proveedor
+    inner join productos p on p.id_producto = pp.id_producto
+    where p.id_producto = @id_producto
+end
+go
+
+-------agregar compra
+
+Create Procedure SP_AgregarCompra
+(
+    @id_proveedor INT,
+    @id_usuario INT,
+    @numero_factura VARCHAR(50),
+    @total DECIMAL(14,2)
+)
+as
+begin
+    insert into compras (id_proveedor, id_usuario, fecha, numero_factura, total, estado)
+    values (@id_proveedor, @id_usuario, GETDATE(), @numero_factura, @total, 1);
+
+    select SCOPE_IDENTITY() as id_compra;
+end 
+go

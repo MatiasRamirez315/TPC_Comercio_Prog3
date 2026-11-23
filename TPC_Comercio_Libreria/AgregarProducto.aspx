@@ -41,24 +41,37 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Precio Compra:</label>
+                <asp:TextBox ID="txtPrecioCompraUltimo" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Stock Mínimo:</label>
+                <asp:TextBox ID="txtStockMin" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Url de imagen:</label>
                 <asp:TextBox ID="txtURLImagen" runat="server" CssClass="form-control" AutoPostBack="true"
                     OnTextChanged="txtURLImagen_TextChanged"></asp:TextBox>
             </div>
-
-            <div class="mb-3 mt-4">
-                <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" />
-                <a href="Inicio.aspx" class="btn btn-secondary">Cancelar</a>
-                <asp:Label ID="lblError" runat="server" CssClass="text-danger ms-3"></asp:Label>
-            </div>
-
         </div>
 
         <div class="col-md-6">
-            <div class="mb-3 text-center">
-               <asp:Image ID="imgVistaPrevia" runat="server" />
+
+
+            <div class="col-md-6">
+                <div class="mb-3 text-center">
+                    <asp:Image ID="imgVistaPrevia" runat="server" />
+                </div>
             </div>
         </div>
 
+
     </div>
+    <div class="mb-3 mt-4">
+        <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" />
+        <a href="CompraForm.aspx" class="btn btn-secondary">Cancelar</a>
+        <asp:Label ID="lblError" runat="server" CssClass="text-danger ms-3"></asp:Label>
+    </div>
+
 </asp:Content>

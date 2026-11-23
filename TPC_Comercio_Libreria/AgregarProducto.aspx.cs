@@ -82,7 +82,7 @@ namespace TPC_Comercio_Libreria
         {
             if (Session["Rol"] == null || Session["Rol"].ToString() != "ADMIN")
             {
-                Response.Redirect("Inicio.aspx");
+                Response.Redirect("CompraForm.aspx");
                 return;
             }
 
