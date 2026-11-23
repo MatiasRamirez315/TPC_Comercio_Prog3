@@ -60,6 +60,15 @@ namespace TPC_Comercio_Libreria
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
+        /// btnAgregar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
+
+        /// <summary>
         /// lblInfoProducto control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace TPC_Comercio_Libreria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInfoProducto;
+
+        /// <summary>
+        /// repCarrito control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repCarrito;
 
         /// <summary>
         /// lblTotal control.
@@ -78,13 +96,22 @@ namespace TPC_Comercio_Libreria
         protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
-        /// btnGuardar control.
+        /// lblCarritoVacio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblCarritoVacio;
+
+        /// <summary>
+        /// btnConfirmar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmar;
 
         /// <summary>
         /// btnCancelar control.

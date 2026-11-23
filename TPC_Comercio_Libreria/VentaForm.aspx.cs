@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dominio;
 using Negocio;
-using VentaDetalleDominio = Dominio.VentaDetalle; 
+using VentaDetalleDominio = Dominio.VentaDetalle;  
 
 namespace TPC_Comercio_Libreria
 {
@@ -14,8 +14,15 @@ namespace TPC_Comercio_Libreria
             if (!IsPostBack)
             {
                 lblError.Visible = false;
+
+                if (Session["CarritoVenta"] == null)
+                {
+                    Session["CarritoVenta"] = new List<VentaDetalleDominio>();
+                }
+
                 cargarClientes();
                 cargarProductos();
+                cargarCarrito();  
             }
         }
 
@@ -66,7 +73,6 @@ namespace TPC_Comercio_Libreria
         private void actualizarPreview()
         {
             lblInfoProducto.Text = "";
-            lblTotal.Text = "";
 
             if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
@@ -86,26 +92,24 @@ namespace TPC_Comercio_Libreria
 
             decimal precioUnitario = Math.Round(p.PrecioCompraUltimo * (1 + p.PorcentajeGanancia / 100), 2);
 
-            lblInfoProducto.Text = "Precio unitario: $ " + precioUnitario.ToString("N2")
-                                 + " &nbsp;·&nbsp; Stock disponible: " + p.StockActual;
-
-            int cantidad;
-            if (int.TryParse(txtCantidad.Text, out cantidad) && cantidad > 0)
+            int enCarrito = 0;
+            var carrito = (List<VentaDetalleDominio>)Session["CarritoVenta"];
+            if (carrito != null)
             {
-                decimal subtotal = precioUnitario * cantidad;
-                lblTotal.Text = "Total: $ " + subtotal.ToString("N2");
+                var lineaExistente = carrito.FirstOrDefault(l => l.IDProducto == idProducto);
+                if (lineaExistente != null) enCarrito = lineaExistente.Cantidad;
             }
+
+            int disponible = p.StockActual - enCarrito;
+
+            lblInfoProducto.Text = "Precio unitario: $ " + precioUnitario.ToString("N2")
+                                 + " &nbsp;·&nbsp; Stock disponible: " + p.StockActual
+                                 + (enCarrito > 0 ? " (ya en carrito: " + enCarrito + ", restante: " + disponible + ")" : "");
         }
 
-        protected void btnGuardar_Click(object sender, EventArgs e)
+        protected void btnAgregar_Click(object sender, EventArgs e)
         {
             lblError.Visible = false;
-
-            if (string.IsNullOrEmpty(ddlCliente.SelectedValue))
-            {
-                mostrarError("Seleccioná un cliente.");
-                return;
-            }
 
             if (string.IsNullOrEmpty(ddlProducto.SelectedValue))
             {
@@ -117,12 +121,6 @@ namespace TPC_Comercio_Libreria
             if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
             {
                 mostrarError("La cantidad debe ser un número mayor a 0.");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(ddlMetodoPago.SelectedValue))
-            {
-                mostrarError("Seleccioná un método de pago.");
                 return;
             }
 
@@ -138,34 +136,149 @@ namespace TPC_Comercio_Libreria
                     return;
                 }
 
-                if (producto.StockActual < cantidad)
+                var carrito = (List<VentaDetalleDominio>)Session["CarritoVenta"];
+
+                var lineaExistente = carrito.FirstOrDefault(l => l.IDProducto == idProducto);
+                int cantidadTotal = cantidad + (lineaExistente != null ? lineaExistente.Cantidad : 0);
+
+                if (producto.StockActual < cantidadTotal)
                 {
-                    mostrarError("Stock insuficiente. Disponible: " + producto.StockActual + " unidades.");
+                    mostrarError("Stock insuficiente. Disponible: " + producto.StockActual
+                               + " unidades. En el carrito ya tenés "
+                               + (lineaExistente != null ? lineaExistente.Cantidad : 0) + ".");
                     return;
                 }
 
                 decimal precioUnitario = Math.Round(producto.PrecioCompraUltimo * (1 + producto.PorcentajeGanancia / 100), 2);
-                decimal subtotal = precioUnitario * cantidad;
+
+                if (lineaExistente != null)
+                {
+                    lineaExistente.Cantidad = cantidadTotal;
+                    lineaExistente.Subtotal = precioUnitario * cantidadTotal;
+                    lineaExistente.PrecioCompraAplicado = producto.PrecioCompraUltimo;
+                    lineaExistente.PorcentajeGananciaAplicado = producto.PorcentajeGanancia;
+                    lineaExistente.PrecioUnitario = precioUnitario;
+                }
+                else
+                {
+                    VentaDetalleDominio nuevaLinea = new VentaDetalleDominio();
+                    nuevaLinea.IDProducto = idProducto;
+                    nuevaLinea.CodigoProducto = producto.Codigo;
+                    nuevaLinea.NombreProducto = producto.Nombre;
+                    nuevaLinea.Cantidad = cantidad;
+                    nuevaLinea.PrecioCompraAplicado = producto.PrecioCompraUltimo;
+                    nuevaLinea.PorcentajeGananciaAplicado = producto.PorcentajeGanancia;
+                    nuevaLinea.PrecioUnitario = precioUnitario;
+                    nuevaLinea.Subtotal = precioUnitario * cantidad;
+                    carrito.Add(nuevaLinea);
+                }
+
+                Session["CarritoVenta"] = carrito;
+
+                ddlProducto.SelectedIndex = 0;
+                txtCantidad.Text = "1";
+                lblInfoProducto.Text = "Seleccioná un producto para ver el precio y el stock.";
+
+                cargarCarrito();
+            }
+            catch (Exception ex)
+            {
+                mostrarError("Error al agregar al carrito: " + ex.Message);
+            }
+        }
+
+        protected void btnQuitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var boton = (System.Web.UI.WebControls.Button)sender;
+                int idProducto = int.Parse(boton.CommandArgument);
+
+                var carrito = (List<VentaDetalleDominio>)Session["CarritoVenta"];
+                var linea = carrito.FirstOrDefault(l => l.IDProducto == idProducto);
+                if (linea != null)
+                {
+                    carrito.Remove(linea);
+                    Session["CarritoVenta"] = carrito;
+                }
+
+                cargarCarrito();
+            }
+            catch (Exception ex)
+            {
+                mostrarError("Error al quitar del carrito: " + ex.Message);
+            }
+        }
+
+        private void cargarCarrito()
+        {
+            var carrito = (List<VentaDetalleDominio>)Session["CarritoVenta"];
+            if (carrito == null) carrito = new List<VentaDetalleDominio>();
+
+            repCarrito.DataSource = carrito;
+            repCarrito.DataBind();
+
+            decimal total = carrito.Sum(l => l.Subtotal);
+            lblTotal.Text = "$ " + total.ToString("N2");
+
+            lblCarritoVacio.Visible = carrito.Count == 0;
+            btnConfirmar.Enabled = carrito.Count > 0;
+        }
+
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            lblError.Visible = false;
+
+            var carrito = (List<VentaDetalleDominio>)Session["CarritoVenta"];
+            if (carrito == null || carrito.Count == 0)
+            {
+                mostrarError("El carrito está vacío. Agregá al menos un producto.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ddlCliente.SelectedValue))
+            {
+                mostrarError("Seleccioná un cliente.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ddlMetodoPago.SelectedValue))
+            {
+                mostrarError("Seleccioná un método de pago.");
+                return;
+            }
+
+            try
+            {
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                foreach (var linea in carrito)
+                {
+                    Producto p = productoNegocio.ObtenerPorID(linea.IDProducto);
+                    if (p == null)
+                    {
+                        mostrarError("El producto '" + linea.NombreProducto + "' ya no existe.");
+                        return;
+                    }
+                    if (p.StockActual < linea.Cantidad)
+                    {
+                        mostrarError("Stock insuficiente para '" + linea.NombreProducto
+                                   + "'. Disponible: " + p.StockActual
+                                   + ", en carrito: " + linea.Cantidad
+                                   + ". Ajustá la cantidad o quitá el producto.");
+                        return;
+                    }
+                }
 
                 Venta venta = new Venta();
                 venta.IDCliente = int.Parse(ddlCliente.SelectedValue);
                 venta.IDUsuario = (int)Session["IDUsuario"];
                 venta.MetodoPago = ddlMetodoPago.SelectedValue;
-                venta.Total = subtotal;
-
-                VentaDetalleDominio linea = new VentaDetalleDominio();
-                linea.IDProducto = idProducto;
-                linea.Cantidad = cantidad;
-                linea.PrecioCompraAplicado = producto.PrecioCompraUltimo;
-                linea.PorcentajeGananciaAplicado = producto.PorcentajeGanancia;
-                linea.PrecioUnitario = precioUnitario;
-                linea.Subtotal = subtotal;
-
-                List<VentaDetalleDominio> detalles = new List<VentaDetalleDominio>();
-                detalles.Add(linea);
+                venta.Total = carrito.Sum(l => l.Subtotal);
 
                 VentaNegocio ventaNegocio = new VentaNegocio();
-                int idVenta = ventaNegocio.registrar(venta, detalles);
+                int idVenta = ventaNegocio.registrar(venta, carrito);
+
+                Session["CarritoVenta"] = null;
 
                 Response.Redirect("VentaDetalle.aspx?id=" + idVenta);
             }
@@ -177,6 +290,7 @@ namespace TPC_Comercio_Libreria
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            Session["CarritoVenta"] = null;
             Response.Redirect("Ventas.aspx");
         }
 
