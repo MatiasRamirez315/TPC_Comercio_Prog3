@@ -831,3 +831,18 @@ begin
     select SCOPE_IDENTITY() as id_compra;
 end 
 go
+
+CREATE PROCEDURE SP_ActualizarStock
+(
+    @id_producto  INT,
+    @stock_actual INT,
+    @stock_minimo INT
+)
+AS
+BEGIN
+    UPDATE productos
+    SET stock_actual = @stock_actual,
+        stock_minimo = @stock_minimo
+    WHERE id_producto = @id_producto;
+END
+GO

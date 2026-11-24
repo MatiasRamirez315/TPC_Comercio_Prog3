@@ -17,7 +17,7 @@ namespace AccesoDatos
                 datos.setearConsulta(
                     "select p.id_producto, p.codigo, p.nombre, m.id_marca, m.descripcion as desc_marca, " +
                     "c.id_categoria, c.descripcion as desc_categoria, t.id_tipo, t.descripcion as desc_tipo, " +
-                    "p.porcentaje_ganancia, p.precio_compra_ultimo, p.stock_actual, p.activo " +
+                    "p.porcentaje_ganancia, p.precio_compra_ultimo, p.stock_actual, p.activo , p.stock_minimo "+
                     "from productos p " +
                     "left join marcas m on p.id_marca = m.id_marca " +
                     "left join categorias c on p.id_categoria = c.id_categoria " +
@@ -52,6 +52,7 @@ namespace AccesoDatos
                         aux.PorcentajeGanancia = (decimal)datos.Lector["porcentaje_ganancia"];
                         aux.PrecioCompraUltimo = (decimal)datos.Lector["precio_compra_ultimo"];
                         aux.StockActual = (int)datos.Lector["stock_actual"];
+                        aux.StockMinimo = (int)datos.Lector["stock_minimo"];
                         aux.Activo = (bool)datos.Lector["activo"];
                         lista.Add(aux);
                     

@@ -45,6 +45,17 @@
     </a>
 </div>
 
+<div id="seccionInventario" runat="server">
+    <h2 class="menu-seccion">Inventario</h2>
+    <div class="menu-grid">
+        <a href="ControlStock.aspx" class="menu-card">
+            <span class="menu-icon">📋</span>
+            <span class="menu-title">Control de Stock</span>
+            <span class="menu-desc">Ajuste manual de stock (solo admin)</span>
+        </a>
+    </div>
+</div>
+
 <div id="seccionContactos" runat="server">
     <h2 class="menu-seccion">Contactos</h2>
     <div class="menu-grid">

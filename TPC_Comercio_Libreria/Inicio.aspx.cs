@@ -14,6 +14,7 @@ namespace TPC_Comercio_Libreria
                 cardTipos.Visible = false;
                 seccionContactos.Visible = false;
                 seccionAdministracion.Visible = false;
+                seccionInventario.Visible = false;
             }
         }
     }

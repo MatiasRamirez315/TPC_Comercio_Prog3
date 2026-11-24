@@ -89,6 +89,7 @@
     <Content Include="CompraForm.aspx" />
     <Content Include="Compras.aspx" />
     <Content Include="Content\Styles.css" />
+    <Content Include="ControlStock.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
@@ -155,6 +156,13 @@
     </Compile>
     <Compile Include="Compras.aspx.designer.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ControlStock.aspx.cs">
+      <DependentUpon>ControlStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlStock.aspx.designer.cs">
+      <DependentUpon>ControlStock.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
