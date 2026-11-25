@@ -19,7 +19,7 @@
     <div class="page-card">
 
         <div class="page-toolbar">
-            <input type="text" class="form-control search-input"
+            <input type="text" class="form-control search-input" id="txtBuscar"
                 placeholder="Buscar por proveedor o fecha..." />
         </div>
 

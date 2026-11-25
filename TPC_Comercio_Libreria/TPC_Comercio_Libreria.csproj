@@ -88,6 +88,7 @@
     <Content Include="Clientes.aspx" />
     <Content Include="CompraForm.aspx" />
     <Content Include="Compras.aspx" />
+    <Content Include="Content\buscador.js" />
     <Content Include="Content\Styles.css" />
     <Content Include="ControlStock.aspx" />
     <Content Include="Global.asax" />
