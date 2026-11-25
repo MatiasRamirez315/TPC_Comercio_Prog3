@@ -86,6 +86,7 @@ namespace AccesoDatos
                 datos.setearParametro("@PrecioCompraUltimo", nuevo.PrecioCompraUltimo);
                 datos.setearParametro("@StockActual", nuevo.StockActual);
                 datos.setearParametro("@StockMinimo", nuevo.StockMinimo);
+                datos.setearParametro("@activo", true);
 
                 return datos.ejecutarAccionScalar();
             }

@@ -846,3 +846,26 @@ BEGIN
     WHERE id_producto = @id_producto;
 END
 GO
+
+ALTER PROCEDURE SP_AltaProducto
+(
+    @codigo VARCHAR(20),
+    @nombre VARCHAR(150),
+    @id_marca INT,
+    @id_categoria INT,
+    @id_tipo INT,
+    @porcentaje_ganancia DECIMAL(5,2),
+    @precio_compra_ultimo DECIMAL(10,2),
+    @stock_actual INT,
+    @stock_minimo INT
+)
+AS
+BEGIN
+    INSERT INTO productos 
+    (codigo, nombre, id_marca, id_categoria, id_tipo, 
+     porcentaje_ganancia, precio_compra_ultimo, stock_actual, stock_minimo, activo)
+    VALUES 
+    (@codigo, @nombre, @id_marca, @id_categoria, @id_tipo, 
+     @porcentaje_ganancia, @precio_compra_ultimo, @stock_actual, @stock_minimo, 1);
+END
+GO
