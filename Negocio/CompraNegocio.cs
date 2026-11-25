@@ -22,10 +22,27 @@ namespace Negocio
             datos.Cancelar(IdCompra);
         }
 
-        public void AgregarCompra (Compra compra)
+        public int AgregarCompra (Compra compra)
         {
             CompraDatos datos = new CompraDatos();
-            datos.AgregarCompra(compra);
+            return datos.AgregarCompra(compra);
+        }
+
+        public void AgregarDetalleCompra(CompraDetalle detalle)
+        {
+            CompraDatos datos = new CompraDatos();
+            datos.AgregarDetalleCompra(detalle);
+        }
+        public Compra ObtenerCompra(int id)
+        {
+            CompraDatos datos = new CompraDatos();
+            return datos.ObtenerCompra(id);
+        }
+
+        public List<CompraDetalle> ListarDetalles(int id)
+        {
+            CompraDatos datos = new CompraDatos();
+            return datos.ListarDetalles(id);
         }
     }
 }

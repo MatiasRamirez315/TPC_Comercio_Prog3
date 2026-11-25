@@ -121,7 +121,7 @@ namespace AccesoDatos
                 datos.setearParametro("@id_proveedor", id);
                 datos.EjecutarAccion();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -180,7 +180,7 @@ namespace AccesoDatos
                 while (datos.Lector.Read())
                 {
                     Proveedor aux = new Proveedor();
-                    aux.IDProveedor = (int)datos.Lector["id_proveedor"] ;
+                    aux.IDProveedor = (int)datos.Lector["id_proveedor"];
                     aux.Nombre = datos.Lector["nombre"].ToString();
                     lista.Add(aux);
 
@@ -196,6 +196,30 @@ namespace AccesoDatos
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public void AsociarProductoProveedor(int idProducto, int idProveedor)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_AsociarProductoProveedor");
+                datos.setearParametro("@idProducto", idProducto);
+                datos.setearParametro("@idProveedor", idProveedor);
+                datos.EjecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
         }
     }
 }

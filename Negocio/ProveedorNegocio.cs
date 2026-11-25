@@ -47,5 +47,11 @@ namespace Negocio
             ProveedorDatos datos = new ProveedorDatos();
             return datos.ListarProveedorXProducto(idProducto);
         }
+
+        public void AsociarProductoProveedor(int idProducto, int idProveedor)
+        {
+            ProveedorDatos datos = new ProveedorDatos();
+            datos.AsociarProductoProveedor(idProducto,idProveedor);
+        }
     }
 }

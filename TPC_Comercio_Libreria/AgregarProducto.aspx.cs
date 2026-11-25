@@ -117,6 +117,32 @@ namespace TPC_Comercio_Libreria
                     return;
                 }
 
+                string precio = txtPrecioCompraUltimo.Text.Trim().Replace('.', ',');
+                if (string.IsNullOrWhiteSpace(precio))
+                {
+                    lblError.Text = "el precio es obligatorio";
+                    return;
+                }
+
+                decimal precioCompra;
+                try
+                {
+                    precioCompra = Convert.ToDecimal(precio);
+                }
+                catch 
+                {
+                    lblError.Text = "Ingrese un precio de compra valido";
+                    return;
+                }
+
+                if (precioCompra <= 0)
+                {
+                    lblError.Text = "El precio debe ser mayor a 0";
+                    return;
+                }
+
+                nuevoProducto.PrecioCompraUltimo = precioCompra;
+
                 nuevoProducto.Marca = new Marca();
                 nuevoProducto.Marca.IDMarca = int.Parse(ddlMarca.SelectedValue);
 

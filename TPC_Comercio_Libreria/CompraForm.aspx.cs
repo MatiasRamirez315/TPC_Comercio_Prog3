@@ -233,6 +233,11 @@ namespace TPC_Comercio_Libreria
             ProveedorNegocio negocio = new ProveedorNegocio();
             List<Proveedor> lista = negocio.ListarProveedorXProducto(idProducto);
 
+            if(lista == null || lista.Count == 0)
+            {
+                lista = negocio.listar();
+            }
+
             ddlProveedor.DataSource = lista;
             ddlProveedor.DataTextField = "Nombre";
             ddlProveedor.DataValueField = "IDProveedor";
@@ -268,10 +273,12 @@ namespace TPC_Comercio_Libreria
                 return;
             }
 
+            int idProducto = int.Parse(ddlProducto.SelectedValue);
+            int idProveedor = int.Parse(ddlProveedor.SelectedValue);
 
             Compra compra = new Compra();
 
-            compra.IDProveedor = new Proveedor { IDProveedor = int.Parse(ddlProveedor.SelectedValue) };
+            compra.IDProveedor = new Proveedor { IDProveedor = idProveedor };
 
             int idUsuario = Convert.ToInt32(Session["IDUsuario"]);
 
@@ -279,11 +286,27 @@ namespace TPC_Comercio_Libreria
             Usuario usuarioCompra = negocioUsuario.listarPorId(idUsuario);
 
             compra.IDUsuario = usuarioCompra;
-            compra.NumeroFactura = txtNumeroFactura.Text.Trim();
+            compra.NumeroFactura = numeroFactura;
             compra.Total = cantidad * precio;
 
             CompraNegocio negocioCompra = new CompraNegocio();
-            negocioCompra.AgregarCompra(compra);
+            int idCompra =negocioCompra.AgregarCompra(compra);
+
+            if (idCompra > 0)
+            {
+                Dominio.CompraDetalle detalle = new Dominio.CompraDetalle();
+                detalle.IDCompra= idCompra;
+                detalle.IDCompraDetalle = idCompra;
+                detalle.IDProducto = idProducto;
+                detalle.Cantidad = cantidad;
+                detalle.PrecioCompra = precio;
+                detalle.Subtotal = compra.Total;
+
+                negocioCompra.AgregarDetalleCompra(detalle);
+
+                ProveedorNegocio negocioProveedor = new ProveedorNegocio();
+                negocioProveedor.AsociarProductoProveedor(idProducto, idProveedor);
+            }
 
             txtNumeroFactura.Text = "";
             txtCantidad.Text = "";

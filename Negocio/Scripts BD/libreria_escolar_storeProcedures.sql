@@ -832,6 +832,77 @@ begin
 end 
 go
 
+Create PRocedure SP_ObtenerCompra
+(
+    @id_compra INT
+)
+as
+begin
+    select * from compras where id_compra = @id_compra
+end
+go
+------------------------------------------------------------------------------
+------------------Alter con actualizacion---------------------------
+-------nombre proveedor, cuil, email y telefono------------
+ALter PRocedure SP_ObtenerCompra
+(
+    @id_compra INT
+)
+as
+begin
+    select 
+        c.id_compra,
+        c.id_proveedor,
+        p.cuit,
+        p.nombre as nombre_proveedor,
+        c.fecha,
+        c.numero_factura,
+        c.total,
+        c.estado
+    from compras c
+    inner join proveedores p on p.id_proveedor = c.id_proveedor
+    where c.id_compra = @id_compra
+end
+go
+
+---------- listar el detalle de la compra
+Create procedure SP_ListarDetalleCompra
+(
+    @id_compra INT
+)
+as
+begin
+    select 
+        dc.id_compra_detalle,
+        dc.id_compra,
+        dc.id_producto,
+        p.precio_compra_ultimo,
+        p.codigo,
+        p.nombre as nombre_producto,
+        dc.cantidad,
+        dc.precio_unitario,
+        dc.subtotal
+    from compra_detalle dc
+    inner join productos p on p.id_producto = dc.id_producto
+    where dc.id_compra = @id_compra
+end
+go
+
+CREATE PROCEDURE SP_AgregarDetalleCompra
+(
+    @id_compra INT,
+    @id_producto INT,
+    @cantidad INT,
+    @precio_unitario DECIMAL(12,2),
+    @subtotal DECIMAL(14,2)
+)
+AS
+BEGIN
+    INSERT INTO compra_detalle (id_compra, id_producto, cantidad, precio_unitario, subtotal)
+    VALUES (@id_compra, @id_producto, @cantidad, @precio_unitario, @subtotal);
+END
+GO
+
 CREATE PROCEDURE SP_ActualizarStock
 (
     @id_producto  INT,
@@ -846,6 +917,7 @@ BEGIN
     WHERE id_producto = @id_producto;
 END
 GO
+
 
 ALTER PROCEDURE SP_AltaProducto
 (
@@ -868,4 +940,24 @@ BEGIN
     (@codigo, @nombre, @id_marca, @id_categoria, @id_tipo, 
      @porcentaje_ganancia, @precio_compra_ultimo, @stock_actual, @stock_minimo, 1);
 END
+
+go
+
+CREATE PROCEDURE SP_AsociarProductoProveedor
+    @idProducto INT,
+    @idProveedor INT
+AS
+BEGIN
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM producto_proveedor
+        WHERE id_producto = @idProducto
+          AND id_proveedor = @idProveedor
+    )
+    BEGIN
+        INSERT INTO producto_proveedor (id_producto, id_proveedor)
+        VALUES (@idProducto, @idProveedor);
+    END
+END;
 GO
