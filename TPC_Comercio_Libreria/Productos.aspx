@@ -47,7 +47,8 @@
                                 <td><%# Eval ("Marca")%></td>
                                 <td><%# Eval ("Categoria")%></td>
                                 <td><%# Eval ("Tipo")%></td>
-                                <td><%# Eval ("PrecioCompraUltimo")%></td>
+
+                                <td><%# string.Format("${0:N2}", Convert.ToDecimal(Eval("PrecioCompraUltimo")) * (1 + (Convert.ToDecimal(Eval("PorcentajeGanancia")) / 100m))) %></td>
                                 <td><%# Eval ("StockActual")%></td>
 
                                 <td class="text-center">

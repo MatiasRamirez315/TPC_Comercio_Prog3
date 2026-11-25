@@ -8,7 +8,7 @@ using AccesoDatos;
 
 namespace Negocio
 {
-    public class ProductoNegocio 
+    public class ProductoNegocio
     {
         public List<Producto> Listar()
         {
@@ -33,7 +33,7 @@ namespace Negocio
                 datos.setearParametro("@precio_compra_ultimo", nuevo.PrecioCompraUltimo);
                 datos.setearParametro("@stock_actual", nuevo.StockActual);
                 datos.setearParametro("@stock_minimo", nuevo.StockMinimo);
-                
+
 
                 return datos.ejecutarAccionScalar();
             }
@@ -42,7 +42,8 @@ namespace Negocio
 
                 throw ex;
             }
-            finally{
+            finally
+            {
                 datos.cerrarConexion();
             }
         }
@@ -55,7 +56,7 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("SP_BuscarProductoPorID");
-                
+
                 datos.setearParametro("@id_producto", idProductoModificado);
                 datos.ejecutarLectura();
 
@@ -74,7 +75,7 @@ namespace Negocio
 
                     prod.Tipo = new Tipo();
                     prod.Tipo.IDTipo = (int)datos.Lector["id_tipo"];
-                   
+
                     prod.PorcentajeGanancia = (decimal)datos.Lector["porcentaje_ganancia"];
                     prod.PrecioCompraUltimo = (decimal)datos.Lector["precio_compra_ultimo"];
 
@@ -109,7 +110,7 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("SP_ModificarProducto");
-                datos.setearParametro("@id_producto",modificar.IDProducto);
+                datos.setearParametro("@id_producto", modificar.IDProducto);
                 datos.setearParametro("@codigo", modificar.Codigo);
                 datos.setearParametro("@nombre", modificar.Nombre);
                 datos.setearParametro("@id_marca", modificar.Marca.IDMarca);
@@ -119,7 +120,7 @@ namespace Negocio
                 datos.setearParametro("@precio_compra_ultimo", modificar.PrecioCompraUltimo);
                 datos.setearParametro("@stock_actual", modificar.StockActual);
                 datos.setearParametro("@stock_minimo", modificar.StockMinimo);
-                datos.setearParametro("@activo", true); 
+                datos.setearParametro("@activo", true);
 
                 datos.EjecutarAccion();
 
@@ -142,8 +143,8 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("SP_EliminarProducto");
-                datos.setearParametro("@id_producto", prod.IDProducto );
-              
+                datos.setearParametro("@id_producto", prod.IDProducto);
+
 
                 datos.EjecutarAccion();
             }
@@ -186,7 +187,50 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-       
 
+        public void SumarStock(int idProducto, int cantidad)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_SumarStockProducto");
+                datos.setearParametro("@IDProducto", idProducto);
+                datos.setearParametro("@Cantidad", cantidad);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void ActualizarPrecio(int idProducto, decimal PrecioCompra, decimal porcentajeGanancia)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_ActualizarPrecioProducto");
+                datos.setearParametro("@IDProducto", idProducto);
+                datos.setearParametro("@PrecioCompra", PrecioCompra);
+                datos.setearParametro("@PorcentajeGanancia", porcentajeGanancia);
+                datos.EjecutarAccion();
+
+             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

@@ -273,6 +273,17 @@ namespace TPC_Comercio_Libreria
                 return;
             }
 
+            decimal porcentajeGanancia = 30m;
+            if (!string.IsNullOrWhiteSpace(txtPorcentajeGanancia.Text))
+            {
+                string PorcGanancia = txtPorcentajeGanancia.Text.Trim().Replace('.' , ',');
+                if(!decimal.TryParse(PorcGanancia, out porcentajeGanancia) || porcentajeGanancia < 0)
+                {
+                    lblError.Text = "ingrese un porcentaje valido";
+                    return;
+                }
+            }
+
             int idProducto = int.Parse(ddlProducto.SelectedValue);
             int idProveedor = int.Parse(ddlProveedor.SelectedValue);
 
@@ -304,6 +315,11 @@ namespace TPC_Comercio_Libreria
 
                 negocioCompra.AgregarDetalleCompra(detalle);
 
+                ProductoNegocio negocioProducto = new ProductoNegocio();
+                negocioProducto.SumarStock(idProducto, cantidad);
+                negocioProducto.ActualizarPrecio(idProducto, precio, porcentajeGanancia);
+                
+
                 ProveedorNegocio negocioProveedor = new ProveedorNegocio();
                 negocioProveedor.AsociarProductoProveedor(idProducto, idProveedor);
             }
@@ -312,6 +328,8 @@ namespace TPC_Comercio_Libreria
             txtCantidad.Text = "";
             txtPrecioCompraUltimo.Text = "";
             txtPorcentajeGanancia.Text = "";
+
+            Response.Redirect("Compras.aspx");
         }
     }
 }

@@ -961,3 +961,31 @@ BEGIN
     END
 END;
 GO
+
+Create Procedure SP_SumarStockProducto
+(
+    @IDProducto int,
+    @Cantidad int
+)
+as 
+BEGIN
+    update Productos
+    set stock_actual = ISNULL(stock_actual,0) + @Cantidad
+    where id_producto = @IDProducto;
+END
+GO
+create Procedure SP_ActualizarPrecioProducto
+(
+    @IDProducto int,
+    @PrecioCompra DECIMAL (12,2),
+    @PorcentajeGanancia DECIMAL(5,2)
+)
+AS
+BEGIN
+
+    Update productos
+    set precio_compra_ultimo = @PrecioCompra,
+    porcentaje_ganancia = ISNULL(@PorcentajeGanancia, porcentaje_ganancia)
+    where id_producto = @IDProducto
+END
+GO

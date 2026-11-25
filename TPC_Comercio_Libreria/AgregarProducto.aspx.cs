@@ -170,7 +170,8 @@ namespace TPC_Comercio_Libreria
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.ModificarImagen(nuevaImg);
                     }
-                    Session["MensajeExito"] = "El producto se modificó correctamente";
+                    Session["MensajeExito"] = "El producto se modificó correctamente"; 
+                    Response.Redirect("Productos.aspx");
                 }
                 else
                 {
@@ -185,10 +186,10 @@ namespace TPC_Comercio_Libreria
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.Agregar(nuevaImg);
                     }
-                    Session["MensajeExito"] = "El producto se agregó correctamente";
+                      Session["MensajeExito"] = "El producto se agregó correctamente";
+                      Response.Redirect("CompraForm.aspx");
                 }
 
-                Response.Redirect("Productos.aspx");
             }
             catch (Exception ex)
             {
