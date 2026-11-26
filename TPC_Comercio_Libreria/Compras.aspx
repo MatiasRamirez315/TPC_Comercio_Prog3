@@ -46,13 +46,11 @@
                                 <td><%# Eval("NombreProveedor") %></td>
                                 <td class="text-end">$ <%# Eval("Total", "{0:N2}") %></td>
                                 <td class="text-center">
-                                    <%# Eval("Estado").ToString() == "Recibido"
-                                    ? "<span class='badge bg-success'>Recibido</span>"
-                                    :Eval("Estado").ToString() == "Cancelado"
-                                    ? "<span class='badge bg-danger'>Cancelado</span>"
-                                    : "<span class='badge bg-secondary'>Pendiente</span>"%>
-                                
+                                    <%# Convert.ToBoolean(Eval("Estado"))
+                                        ? "<span class='badge bg-success'>Recibido</span>"
+                                        : "<span class='badge bg-danger'>Cancelado</span>" %>
                                 </td>
+
                                 <td class="text-center">
                                     <a href='<%# "CompraDetalle.aspx?id=" + Eval("IDCompra") %>'
                                         class="btn btn-sm btn-outline-secondary me-1">Ver detalle</a>
@@ -60,20 +58,14 @@
                                     <asp:PlaceHolder runat="server"
                                         Visible='<%# Session["Rol"] != null 
                                             && Session["Rol"].ToString() == "ADMIN"
-                                            && Eval("Estado").ToString() == "Pendiente" %>'>
+                                            && Eval("Estado") != null
+                                            && Convert.ToBoolean(Eval("Estado"))%>'>
                                         <a href='<%# "Compras.aspx?cancelar=" + Eval("IDCompra") %>'
                                             class="btn btn-sm btn-outline-danger"
                                             onclick="return confirm('¿Cancelar esta compra?');">Cancelar</a>
-                                        </asp:PlaceHolder >
+                                    </asp:PlaceHolder>
 
-                                        <asp:PlaceHolder runat="server"
-                                            Visible='<%# Session["Rol"] != null 
-                                                && Session["Rol"].ToString() == "ADMIN"
-                                                && Eval("Estado").ToString() == "CONFIRMADA" %>'>
-                                            <a href='<%# "Compras.aspx?cancelar=" + Eval("IDCompra") %>'
-                                                class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('¿Cancelar esta compra? Se restaurará el stock de los productos.');">Cancelar</a>
-                                        </asp:PlaceHolder>
+
                                 </td>
                             </tr>
                         </ItemTemplate>

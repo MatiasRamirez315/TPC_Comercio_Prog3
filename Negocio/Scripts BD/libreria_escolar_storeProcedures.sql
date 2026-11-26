@@ -291,7 +291,8 @@ BEGIN
         c.id_usuario,
         u.usuario       AS usuario,
         c.numero_factura,
-        c.total
+        c.total,
+        c.estado
     FROM compras c
     INNER JOIN proveedores p ON p.id_proveedor = c.id_proveedor
     INNER JOIN usuarios u    ON u.id_usuario   = c.id_usuario

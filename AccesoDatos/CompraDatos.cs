@@ -35,7 +35,7 @@ namespace AccesoDatos
                     aux.IDUsuario.IDUsuario = (int)datos.Lector["id_usuario"];
                     aux.IDUsuario.NombreUsuario = datos.Lector["usuario"].ToString();
 
-                    aux.Estado = (EstadoCompra)(int)datos.Lector["estado"];
+                   aux.Estado = (bool)datos.Lector["estado"];
                     aux.Total = (decimal)datos.Lector["total"];
                     lista.Add(aux);
                 }
@@ -152,7 +152,7 @@ namespace AccesoDatos
                     compra.IDProveedor.Cuit = datos.Lector["cuit"].ToString();
                     compra.NumeroFactura = datos.Lector["numero_factura"].ToString();
                     compra.Total = (decimal)datos.Lector["total"];
-                    compra.Estado = (EstadoCompra)datos.Lector["estado"];
+                    compra.Estado = (bool)datos.Lector["estado"];
 
                     return compra;
                 }
