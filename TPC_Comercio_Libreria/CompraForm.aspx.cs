@@ -32,14 +32,8 @@ namespace TPC_Comercio_Libreria
 
                     CargarProveedores();
 
-
-
-                    
-
+                    PrecargarNuevoIngreso();
                     //CargarDatosProducto();
-
-
-
 
                 }
                 catch (Exception ex)
@@ -48,6 +42,60 @@ namespace TPC_Comercio_Libreria
                     throw ex;
                 }
             }
+        }
+
+        private void PrecargarNuevoIngreso()
+        {
+            if (Session["PrecargaCompra_IDProducto"] == null)
+            {
+                return;
+            }
+
+            if (Session["PrecargaCompra_IDProveedor"] != null &&
+                ddlProveedor.Items.FindByValue(Session["PrecargaCompra_IDProveedor"].ToString()) != null)
+            {
+                ddlProveedor.SelectedValue = Session["PrecargaCompra_IDProveedor"].ToString();
+            }
+
+            CargarCategoriaXProveedor();
+
+            if (Session["PrecargaCompra_IDCategoria"] != null &&
+               ddlCategoria.Items.FindByValue(Session["PrecargaCompra_IDCategoria"].ToString()) != null)
+            {
+                ddlCategoria.SelectedValue = Session["PrecargaCompra_IDCategoria"].ToString();
+            }
+
+            CargarProductoXCategoria();
+
+            string idProdStr = Session["PrecargaCompra_IDProducto"].ToString();
+
+            if (ddlProducto.Items.FindByValue(idProdStr) != null && int.TryParse(idProdStr, out int idProd))
+            {
+                ddlProducto.SelectedValue = idProdStr;
+                MostrarImagenProducto(idProd);
+                CargarDatosProducto();
+                InfoNuestra();
+            }
+
+            if (Session["PrecargaCompra_PrecioUnitario"] != null &&
+                 !string.IsNullOrWhiteSpace(Session["PrecargaCompra_PrecioUnitario"].ToString()))
+            {
+                txtPrecioCompraUltimo.Text = Session["PrecargaCompra_PrecioUnitario"].ToString();
+            }
+
+            LimpiarSesionPrecargaCompra();
+        }
+
+        private void LimpiarSesionPrecargaCompra()
+        {
+            Session.Remove("PrecargaCompra_IDProducto");
+            Session.Remove("PrecargaCompra_IDProveedor");
+            Session.Remove("PrecargaCompra_IDCategoria");
+            Session.Remove("PrecargaCompra_IDMarca");
+            Session.Remove("PrecargaCompra_IDTipo");
+            Session.Remove("PrecargaCompra_PrecioUnitario");
+            Session.Remove("PrecargaCompra_Nombre");
+            Session.Remove("PrecargaCompra_Codigo");
         }
 
         private void CargarDatosProducto()
@@ -130,20 +178,26 @@ namespace TPC_Comercio_Libreria
             {
                 if (prod.IDProducto == idProd)
                 {
-                    decimal NuestroPrecio = prod.PrecioCompraUltimo + (prod.PrecioCompraUltimo * prod.PorcentajeGanancia / 100);
-                    decimal prueba = prod.StockActual;
-                    lblInfoProducto.Text = "Precio de venta: $" + NuestroPrecio.ToString("0.00") + " · Stock actual: " + prod.StockActual;
-                    break;
+                    if (prod.PorcentajeGanancia <= 0)
+                    {
+                          lblInfoProducto.Text = "No tenemos precio de venta" + " · No tenemos stock actual " ;
+                    }
+                    else
+                    {
+                        decimal NuestroPrecio = prod.PrecioCompraUltimo + (prod.PrecioCompraUltimo * prod.PorcentajeGanancia / 100);
+                        decimal prueba = prod.StockActual;
+                        lblInfoProducto.Text = "Precio de venta: $" + NuestroPrecio.ToString("0.00") + " · Stock actual: " + prod.StockActual;
+                        break;
+
+                    }
                 }
             }
         }
 
-
-
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarProductoXCategoria();
-            
+
         }
 
         public void MostrarImagenProducto(int idProd)
@@ -184,7 +238,6 @@ namespace TPC_Comercio_Libreria
                 int idProd = int.Parse(ddlProducto.SelectedValue);
                 MostrarImagenProducto(idProd);
                 CargarDatosProducto();
-                /// CargarProveedoresXProducto(); 
                 InfoNuestra();
             }
 

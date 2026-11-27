@@ -232,5 +232,28 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void AsociarProveedor (int idProducto, int idProv)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_AsociarProductoProveedor");
+                datos.setearParametro("@idProducto", idProducto);
+                datos.setearParametro("@idProveedor", idProv);
+                datos.EjecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

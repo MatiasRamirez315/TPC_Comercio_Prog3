@@ -20,6 +20,15 @@
                 <asp:TextBox ID="txtCodigo" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
 
+            <div class ="mb-3">
+                <label class ="form-label">Proveedor:</label>
+                <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"
+                    DataTextField="Nombre" DataValueField="IDProveedor" AutoPostBack="true"
+                    OnSelectedIndexChanged="ddlProveedor_SelectedIndexChanged">
+
+                </asp:DropDownList>
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">Marca:</label>
                 <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select"

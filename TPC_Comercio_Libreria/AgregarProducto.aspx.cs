@@ -17,6 +17,15 @@ namespace TPC_Comercio_Libreria
             {
                 try
                 {
+                    ProveedorNegocio negocio = new ProveedorNegocio();
+                    List<Proveedor> lista = negocio.listar();
+                    
+                    ddlProveedor.DataSource = lista;
+                    ddlProveedor.DataTextField = "Nombre";
+                    ddlProveedor.DataValueField = "IDProveedor";
+                    ddlProveedor.DataBind();
+
+
                     MarcaNegocio marcaNegocio = new MarcaNegocio();
                     ddlMarca.DataSource = marcaNegocio.listar();
                     ddlMarca.DataTextField = "Descripcion";
@@ -69,6 +78,28 @@ namespace TPC_Comercio_Libreria
 
                         btnAceptar.Text = "Modificar";
                     }
+                }
+            }
+        }
+
+        protected void ddlProveedor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlProveedor.SelectedValue == "0")
+                return;
+
+            string nombreProveedor = ddlProveedor.SelectedItem.Text.Trim().ToLower();
+
+            foreach (ListItem itemMarca in ddlMarca.Items)
+            {
+                if (itemMarca.Value == "0") continue;
+
+                string nombreMarca = itemMarca.Text.Trim().ToLower();
+
+                // Si el nombre del proveedor contiene el nombre de la marca
+                if (nombreProveedor.Contains(nombreMarca))
+                {
+                    ddlMarca.SelectedValue = itemMarca.Value;
+                    break;
                 }
             }
         }
@@ -186,7 +217,25 @@ namespace TPC_Comercio_Libreria
                         ImagenNegocio negocioImagen = new ImagenNegocio();
                         negocioImagen.Agregar(nuevaImg);
                     }
-                      Session["MensajeExito"] = "El producto se agregó correctamente";
+
+                    int? idProveedorSeleccionado = null;
+                    if (int.TryParse(ddlProveedor.SelectedValue, out int idProv) && idProv > 0)
+                    {
+                        negocio.AsociarProveedor(idNuevoProducto, idProv);
+                        idProveedorSeleccionado = idProv;
+                    }
+
+                    Session["PrecargaCompra_IDProducto"] = idNuevoProducto;
+                    Session["PrecargaCompra_IDProveedor"] = idProveedorSeleccionado;
+                    Session["PrecargaCompra_IDCategoria"] = nuevoProducto.Categoria.IDCategoria;
+                    Session["PrecargaCompra_IDMarca"] = nuevoProducto.Marca.IDMarca;
+                    Session["PrecargaCompra_IDTipo"] = nuevoProducto.Tipo.IDTipo;
+                    Session["PrecargaCompra_PrecioUnitario"] = nuevoProducto.PrecioCompraUltimo;
+                    Session["PrecargaCompra_Nombre"] = nuevoProducto.Nombre;
+                    Session["PrecargaCompra_Codigo"] = nuevoProducto.Codigo;
+
+
+                    Session["MensajeExito"] = "El producto se agregó correctamente";
                       Response.Redirect("CompraForm.aspx");
                 }
 
@@ -196,5 +245,7 @@ namespace TPC_Comercio_Libreria
                 throw ex;
             }
         }
+
+
     }
 }
