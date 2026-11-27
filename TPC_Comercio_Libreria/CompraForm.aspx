@@ -25,6 +25,12 @@
 
         <div class="row align-items-start g-4">
             <div class="col-md-6">
+               
+                <div class="mb-3">
+                    <label class="form-label">Proveedor <span class="text-danger">*</span></label>
+                    <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select" AutoPostBack="true"
+                       OnSelectedIndexChanged="ddlProveedor_SelectedIndexChanged" ></asp:DropDownList>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Categoria  <span class="text-danger">*</span></label>
                     <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select"
@@ -40,10 +46,6 @@
                     </asp:DropDownList>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Proveedor <span class="text-danger">*</span></label>
-                    <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"></asp:DropDownList>
-                </div>
 
 
                 <div class="mb-3">

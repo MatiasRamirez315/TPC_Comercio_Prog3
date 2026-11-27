@@ -35,5 +35,11 @@ namespace Negocio
             CategoriaDatos datos = new CategoriaDatos();
             datos.eliminar(id);
         }
+
+        public List<Categoria> ListarCategoriaXProveedor(int idProveedor)
+        {
+            CategoriaDatos datos = new CategoriaDatos();
+            return datos.ListarCategoriaXProveedor(idProveedor);
+        }
     }
 }

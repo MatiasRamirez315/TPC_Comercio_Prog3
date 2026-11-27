@@ -28,18 +28,18 @@ namespace TPC_Comercio_Libreria
             {
                 try
                 {
-                    
 
-                    CargarCategorias();
 
-                    CargarProductoXCategoria();
+                    CargarProveedores();
 
-                    CargarProveedoresXProducto();
-
-                    CargarDatosProducto();
 
 
                     
+
+                    //CargarDatosProducto();
+
+
+
 
                 }
                 catch (Exception ex)
@@ -68,13 +68,19 @@ namespace TPC_Comercio_Libreria
             }
 
         }
-        private void CargarCategorias()
+        private void CargarProveedores()
         {
-            CategoriaNegocio negocioCate = new CategoriaNegocio();
-            ddlCategoria.DataSource = negocioCate.listar();
-            ddlCategoria.DataTextField = "Descripcion";
-            ddlCategoria.DataValueField = "IDCategoria";
-            ddlCategoria.DataBind();
+            ProveedorNegocio negocioProv = new ProveedorNegocio();
+            ddlProveedor.DataSource = negocioProv.listar();
+            ddlProveedor.DataTextField = "Nombre";
+            ddlProveedor.DataValueField = "IDProveedor";
+            ddlProveedor.DataBind();
+
+        }
+
+        protected void ddlProveedor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarCategoriaXProveedor();
 
         }
 
@@ -102,10 +108,10 @@ namespace TPC_Comercio_Libreria
             ddlProducto.DataValueField = "IDProducto";
             ddlProducto.DataBind();
 
-            
+
         }
 
-        
+
         private void InfoNuestra()
         {
             lblInfoProducto.Text = "Seleccioná un producto para ver el precio y el stock.";
@@ -124,7 +130,7 @@ namespace TPC_Comercio_Libreria
             {
                 if (prod.IDProducto == idProd)
                 {
-                    decimal NuestroPrecio = prod.PrecioCompraUltimo + (prod.PrecioCompraUltimo *  prod.PorcentajeGanancia / 100);
+                    decimal NuestroPrecio = prod.PrecioCompraUltimo + (prod.PrecioCompraUltimo * prod.PorcentajeGanancia / 100);
                     decimal prueba = prod.StockActual;
                     lblInfoProducto.Text = "Precio de venta: $" + NuestroPrecio.ToString("0.00") + " · Stock actual: " + prod.StockActual;
                     break;
@@ -132,12 +138,12 @@ namespace TPC_Comercio_Libreria
             }
         }
 
-        
+
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarProductoXCategoria();
-            CargarProveedoresXProducto();
+            
         }
 
         public void MostrarImagenProducto(int idProd)
@@ -148,7 +154,7 @@ namespace TPC_Comercio_Libreria
 
             foreach (var item in lista)
             {
-                if(item.IDProducto == idProd)
+                if (item.IDProducto == idProd)
                 {
                     prod = item;
                     break;
@@ -160,7 +166,8 @@ namespace TPC_Comercio_Libreria
                 ImagenNegocio imagenNegocio = new ImagenNegocio();
                 prod.Imagenes = imagenNegocio.ListarPorProducto(prod.IDProducto);
 
-                if(prod.Imagenes != null && prod.Imagenes.Count > 0 && !string.IsNullOrWhiteSpace(prod.Imagenes[0].URLImagen)){
+                if (prod.Imagenes != null && prod.Imagenes.Count > 0 && !string.IsNullOrWhiteSpace(prod.Imagenes[0].URLImagen))
+                {
                     imgProducto.ImageUrl = prod.Imagenes[0].URLImagen;
                     return;
                 }
@@ -171,15 +178,16 @@ namespace TPC_Comercio_Libreria
         }
         public void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(ddlProducto.SelectedValue)){
+            if (!string.IsNullOrWhiteSpace(ddlProducto.SelectedValue))
+            {
 
                 int idProd = int.Parse(ddlProducto.SelectedValue);
                 MostrarImagenProducto(idProd);
                 CargarDatosProducto();
-                CargarProveedoresXProducto(); 
+                /// CargarProveedoresXProducto(); 
                 InfoNuestra();
             }
-        
+
         }
 
         public void txtCantidad_TextChanged(object sender, EventArgs e)
@@ -212,36 +220,36 @@ namespace TPC_Comercio_Libreria
                 {
                     decimal Total = prod.PrecioCompraUltimo * decimal.Parse(txtCantidad.Text);
                     int CantTot = prod.StockActual + int.Parse(txtCantidad.Text);
-                    lblTotal.Text = "Total de compra: $" + Total.ToString("0.00") + " · Cantidad final: " + CantTot ;
+                    lblTotal.Text = "Total de compra: $" + Total.ToString("0.00") + " · Cantidad final: " + CantTot;
                     break;
                 }
             }
         }
 
-        public void CargarProveedoresXProducto()
+        public void CargarCategoriaXProveedor()
         {
-            ddlProveedor.DataSource = null;
-            ddlProveedor.DataBind();
+            ddlCategoria.DataSource = null;
+            ddlCategoria.DataBind();
 
-            if (string.IsNullOrWhiteSpace(ddlProducto.SelectedValue))
+            if (!int.TryParse(ddlProveedor.SelectedValue, out int idProveedor) || idProveedor <= 0)
             {
                 return;
             }
 
-            int idProducto = int.Parse(ddlProducto.SelectedValue);
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            List<Categoria> lista = negocio.ListarCategoriaXProveedor(idProveedor);
 
-            ProveedorNegocio negocio = new ProveedorNegocio();
-            List<Proveedor> lista = negocio.ListarProveedorXProducto(idProducto);
-
-            if(lista == null || lista.Count == 0)
+            if (lista == null || lista.Count == 0)
             {
                 lista = negocio.listar();
             }
 
-            ddlProveedor.DataSource = lista;
-            ddlProveedor.DataTextField = "Nombre";
-            ddlProveedor.DataValueField = "IDProveedor";
-            ddlProveedor.DataBind();
+            ddlCategoria.DataSource = lista;
+            ddlCategoria.DataTextField = "Descripcion";
+            ddlCategoria.DataValueField = "IDCategoria";
+            ddlCategoria.DataBind();
+
+            CargarProductoXCategoria();
         }
 
         public void btnRegistrar_Click(object sender, EventArgs e)
@@ -255,13 +263,13 @@ namespace TPC_Comercio_Libreria
                 return;
             }
 
-            if(string.IsNullOrWhiteSpace(ddlProducto.SelectedValue) || string.IsNullOrWhiteSpace(ddlProveedor.SelectedValue))
+            if (string.IsNullOrWhiteSpace(ddlProducto.SelectedValue) || string.IsNullOrWhiteSpace(ddlProveedor.SelectedValue))
             {
                 lblError.Text = "por favor seleccione un producto y un proveedor";
                 return;
             }
 
-            if(!int.TryParse(txtCantidad.Text, out int cantidad) || cantidad <= 0)
+            if (!int.TryParse(txtCantidad.Text, out int cantidad) || cantidad <= 0)
             {
                 lblError.Text = "Ingrese una cantidad mayor a 0";
                 return;
@@ -276,8 +284,8 @@ namespace TPC_Comercio_Libreria
             decimal porcentajeGanancia = 30m;
             if (!string.IsNullOrWhiteSpace(txtPorcentajeGanancia.Text))
             {
-                string PorcGanancia = txtPorcentajeGanancia.Text.Trim().Replace('.' , ',');
-                if(!decimal.TryParse(PorcGanancia, out porcentajeGanancia) || porcentajeGanancia < 0)
+                string PorcGanancia = txtPorcentajeGanancia.Text.Trim().Replace('.', ',');
+                if (!decimal.TryParse(PorcGanancia, out porcentajeGanancia) || porcentajeGanancia < 0)
                 {
                     lblError.Text = "ingrese un porcentaje valido";
                     return;
@@ -301,12 +309,12 @@ namespace TPC_Comercio_Libreria
             compra.Total = cantidad * precio;
 
             CompraNegocio negocioCompra = new CompraNegocio();
-            int idCompra =negocioCompra.AgregarCompra(compra);
+            int idCompra = negocioCompra.AgregarCompra(compra);
 
             if (idCompra > 0)
             {
                 Dominio.CompraDetalle detalle = new Dominio.CompraDetalle();
-                detalle.IDCompra= idCompra;
+                detalle.IDCompra = idCompra;
                 detalle.IDCompraDetalle = idCompra;
                 detalle.IDProducto = idProducto;
                 detalle.Cantidad = cantidad;
@@ -318,7 +326,7 @@ namespace TPC_Comercio_Libreria
                 ProductoNegocio negocioProducto = new ProductoNegocio();
                 negocioProducto.SumarStock(idProducto, cantidad);
                 negocioProducto.ActualizarPrecio(idProducto, precio, porcentajeGanancia);
-                
+
 
                 ProveedorNegocio negocioProveedor = new ProveedorNegocio();
                 negocioProveedor.AsociarProductoProveedor(idProducto, idProveedor);

@@ -109,5 +109,37 @@ namespace AccesoDatos
                 datos.cerrarConexion();
             }
         }
+
+        public List<Categoria> ListarCategoriaXProveedor(int idProveedor)
+        {
+            List<Categoria> lista = new List<Categoria>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("SP_ListarCategoriaPorProveedor");
+                datos.setearParametro("@id_proveedor", idProveedor);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+                    aux.IDCategoria = (int)datos.Lector["id_categoria"];
+                    aux.Descripcion = datos.Lector["descripcion"].ToString();
+                    lista.Add(aux);
+
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

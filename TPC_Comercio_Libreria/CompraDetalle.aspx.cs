@@ -43,10 +43,9 @@ namespace TPC_Comercio_Libreria
 
             lblNumeroCompra.Text = compra.IDCompra.ToString();
             lblFecha.Text = compra.Fecha.ToString("dd/MM/yyyy HH:mm");
-            lblEstado.Text = compra.Estado.ToString() == "Recibido" ? "<span class='badge bg-success'>Recibido</span>"
-                                    :compra.Estado.ToString() == "Cancelado"
-                                    ? "<span class='badge bg-danger'>Cancelado</span>"
-                                    : "<span class='badge bg-secondary'>Pendiente</span>";
+            lblEstado.Text = Convert.ToBoolean(compra.Estado) 
+                                    ? "<span class='badge bg-success'>Recibido</span>"
+                                    : "<span class='badge bg-danger'>Cancelado</span>";
             Proveedor aux = new Proveedor();
             ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
             aux = proveedorNegocio.listarPorId(compra.IDProveedor.IDProveedor);

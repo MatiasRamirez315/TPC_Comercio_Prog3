@@ -990,3 +990,26 @@ BEGIN
     where id_producto = @IDProducto
 END
 GO
+
+-- para compras forms, lista las categorias que tiene un proveedor
+
+CREATE PROCEDURE SP_ListarCategoriaPorProveedor
+    @id_proveedor INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT DISTINCT
+        c.id_categoria,
+        c.descripcion
+    FROM producto_proveedor pp
+    INNER JOIN productos p
+        ON p.id_producto = pp.id_producto
+    INNER JOIN categorias c
+        ON c.id_categoria = p.id_categoria
+    WHERE pp.id_proveedor = @id_proveedor
+      AND p.activo = 1
+      AND c.activo = 1
+    ORDER BY c.descripcion;
+END
+GO
