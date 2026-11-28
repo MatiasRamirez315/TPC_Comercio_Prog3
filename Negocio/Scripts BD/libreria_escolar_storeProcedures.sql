@@ -1013,3 +1013,52 @@ BEGIN
     ORDER BY c.descripcion;
 END
 GO
+
+CREATE PROCEDURE SP_AltaMovimientoStockManual
+(
+    @id_producto          INT,
+    @id_usuario           INT,
+    @stock_actual_antes   INT,
+    @stock_actual_despues INT,
+    @stock_minimo_antes   INT,
+    @stock_minimo_despues INT,
+    @motivo               VARCHAR(300)
+)
+AS
+BEGIN
+    INSERT INTO movimientos_stock_manuales
+    (id_producto, id_usuario, fecha,
+     stock_actual_antes, stock_actual_despues,
+     stock_minimo_antes, stock_minimo_despues,
+     motivo)
+    VALUES
+    (@id_producto, @id_usuario, GETDATE(),
+     @stock_actual_antes, @stock_actual_despues,
+     @stock_minimo_antes, @stock_minimo_despues,
+     @motivo);
+END
+GO
+
+CREATE PROCEDURE SP_ListarMovimientosStockManuales
+(
+    @top INT = 50
+)
+AS
+BEGIN
+    SELECT TOP (@top)
+        m.id_movimiento,
+        m.fecha,
+        p.codigo        AS codigo_producto,
+        p.nombre        AS nombre_producto,
+        u.usuario       AS usuario,
+        m.stock_actual_antes,
+        m.stock_actual_despues,
+        m.stock_minimo_antes,
+        m.stock_minimo_despues,
+        m.motivo
+    FROM movimientos_stock_manuales m
+    INNER JOIN productos p ON p.id_producto = m.id_producto
+    INNER JOIN usuarios  u ON u.id_usuario  = m.id_usuario
+    ORDER BY m.fecha DESC;
+END
+GO

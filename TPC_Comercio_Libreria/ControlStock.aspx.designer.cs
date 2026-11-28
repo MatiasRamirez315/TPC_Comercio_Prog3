@@ -78,6 +78,15 @@ namespace TPC_Comercio_Libreria
         protected global::System.Web.UI.WebControls.Repeater repConfirmacion;
 
         /// <summary>
+        /// txtMotivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMotivo;
+
+        /// <summary>
         /// btnConfirmar control.
         /// </summary>
         /// <remarks>
@@ -94,5 +103,23 @@ namespace TPC_Comercio_Libreria
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVolver;
+
+        /// <summary>
+        /// repHistorial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repHistorial;
+
+        /// <summary>
+        /// msgHistorialVacio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl msgHistorialVacio;
     }
 }

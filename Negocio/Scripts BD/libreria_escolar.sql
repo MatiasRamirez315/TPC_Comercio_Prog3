@@ -155,3 +155,21 @@ CREATE TABLE venta_detalle (
   FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
 GO
+
+CREATE TABLE movimientos_stock_manuales (
+    id_movimiento       INT IDENTITY(1,1) PRIMARY KEY,
+    id_producto         INT NOT NULL,
+    id_usuario          INT NOT NULL,
+    fecha               DATETIME NOT NULL DEFAULT GETDATE(),
+    stock_actual_antes  INT NOT NULL,
+    stock_actual_despues INT NOT NULL,
+    stock_minimo_antes  INT NOT NULL,
+    stock_minimo_despues INT NOT NULL,
+    motivo              VARCHAR(300) NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
+    FOREIGN KEY (id_usuario)  REFERENCES usuarios(id_usuario)
+);
+GO
+
+CREATE INDEX IX_mov_stock_manual_fecha ON movimientos_stock_manuales(fecha DESC);
+GO

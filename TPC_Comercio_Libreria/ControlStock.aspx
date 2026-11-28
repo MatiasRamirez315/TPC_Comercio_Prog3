@@ -15,11 +15,9 @@
 
     <div class="alert alert-warning">
         <b>Atención:</b> esta pantalla modifica directamente el stock. Usala solo después de un conteo físico.
+        Cada cambio queda registrado con tu usuario, la fecha y el motivo que indiques.
     </div>
 
-    <!-- ============================================================
-         PANEL 1: Edición
-         ============================================================ -->
     <asp:Panel ID="pnlEdicion" runat="server">
 
         <div class="page-card">
@@ -43,12 +41,12 @@
                                         <asp:HiddenField ID="hdnIDProducto" runat="server" Value='<%# Eval("IDProducto") %>' />
                                         <asp:HiddenField ID="hdnNombre" runat="server" Value='<%# Eval("Nombre") %>' />
                                         <asp:HiddenField ID="hdnStockActualOriginal" runat="server" Value='<%# Eval("StockActual") %>' />
+                                        <asp:HiddenField ID="hdnStockMinOriginal" runat="server" Value='<%# Eval("StockMinimo") %>' />
                                         <asp:TextBox ID="txtStockActual" runat="server" TextMode="Number"
                                                      CssClass="form-control form-control-sm"
                                                      Text='<%# Eval("StockActual") %>' />
                                     </td>
                                     <td>
-                                        <asp:HiddenField ID="hdnStockMinOriginal" runat="server" Value='<%# Eval("StockMinimo") %>' />
                                         <asp:TextBox ID="txtStockMinimo" runat="server" TextMode="Number"
                                                      CssClass="form-control form-control-sm"
                                                      Text='<%# Eval("StockMinimo") %>' />
@@ -68,9 +66,6 @@
 
     </asp:Panel>
 
-    <!-- ============================================================
-         PANEL 2: Confirmación
-         ============================================================ -->
     <asp:Panel ID="pnlConfirmacion" runat="server" Visible="false">
 
         <div class="page-card">
@@ -111,6 +106,14 @@
                 </table>
             </div>
 
+            <div class="mt-4">
+                <label class="form-label">Motivo del ajuste <span class="text-danger">*</span></label>
+                <asp:TextBox ID="txtMotivo" runat="server" CssClass="form-control"
+                             MaxLength="300" TextMode="MultiLine" Rows="2"
+                             placeholder="Ej: Recuento físico mensual, faltante por rotura, error de carga previo..." />
+                <small class="text-muted">Este motivo queda registrado en el historial junto con tu usuario y la fecha.</small>
+            </div>
+
             <div class="mt-4 d-flex gap-2">
                 <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar cambios"
                             CssClass="btn btn-warning" OnClick="btnConfirmar_Click" />
@@ -120,5 +123,53 @@
         </div>
 
     </asp:Panel>
+
+    <div class="page-card mt-4">
+        <h2 class="menu-seccion" style="margin-top:0;">Últimos movimientos manuales</h2>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Producto</th>
+                        <th class="text-center">Stock Actual</th>
+                        <th class="text-center">Stock Mínimo</th>
+                        <th>Usuario</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <asp:Repeater ID="repHistorial" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("Fecha", "{0:dd/MM/yyyy HH:mm}") %></td>
+                                <td>
+                                    <b><%# Eval("CodigoProducto") %></b><br/>
+                                    <small class="text-muted"><%# Eval("NombreProducto") %></small>
+                                </td>
+                                <td class="text-center">
+                                    <%# (int)Eval("StockActualAntes") != (int)Eval("StockActualDespues")
+                                        ? "<span class='text-muted'>" + Eval("StockActualAntes") + "</span> → <b>" + Eval("StockActualDespues") + "</b>"
+                                        : Eval("StockActualDespues").ToString() %>
+                                </td>
+                                <td class="text-center">
+                                    <%# (int)Eval("StockMinimoAntes") != (int)Eval("StockMinimoDespues")
+                                        ? "<span class='text-muted'>" + Eval("StockMinimoAntes") + "</span> → <b>" + Eval("StockMinimoDespues") + "</b>"
+                                        : Eval("StockMinimoDespues").ToString() %>
+                                </td>
+                                <td><%# Eval("Usuario") %></td>
+                                <td><%# Eval("Motivo") %></td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center text-muted mt-3" id="msgHistorialVacio" runat="server" visible="false">
+            No hay movimientos manuales registrados todavía.
+        </div>
+    </div>
 
 </asp:Content>
